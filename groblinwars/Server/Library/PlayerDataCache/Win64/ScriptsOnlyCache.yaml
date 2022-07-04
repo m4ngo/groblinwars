@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - GameLogic
+    - JumpPad
     - NetworkManager
     - NetworkObject
     - Player
@@ -104,87 +105,89 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1622}
     - Class: 114
-      Script: {instanceID: 1632}
+      Script: {instanceID: 1630}
     - Class: 114
-      Script: {instanceID: 1748}
+      Script: {instanceID: 1746}
     - Class: 114
-      Script: {instanceID: 1832}
+      Script: {instanceID: 1830}
     - Class: 114
-      Script: {instanceID: 2000}
+      Script: {instanceID: 1998}
     - Class: 114
-      Script: {instanceID: 2598}
+      Script: {instanceID: 2596}
     - Class: 114
-      Script: {instanceID: 2702}
+      Script: {instanceID: 2700}
     - Class: 114
-      Script: {instanceID: 3620}
+      Script: {instanceID: 3618}
     - Class: 114
-      Script: {instanceID: 3820}
+      Script: {instanceID: 3818}
     - Class: 114
-      Script: {instanceID: 3852}
+      Script: {instanceID: 3850}
     - Class: 114
-      Script: {instanceID: 3934}
+      Script: {instanceID: 3932}
     - Class: 114
-      Script: {instanceID: 4126}
+      Script: {instanceID: 4124}
     - Class: 114
-      Script: {instanceID: 4264}
+      Script: {instanceID: 4262}
     - Class: 114
-      Script: {instanceID: 4658}
+      Script: {instanceID: 4656}
     - Class: 114
-      Script: {instanceID: 4788}
+      Script: {instanceID: 4786}
     - Class: 114
-      Script: {instanceID: 5166}
+      Script: {instanceID: 5164}
     - Class: 114
-      Script: {instanceID: 6124}
+      Script: {instanceID: 6122}
     - Class: 114
-      Script: {instanceID: 6146}
+      Script: {instanceID: 6144}
     - Class: 114
-      Script: {instanceID: 6224}
+      Script: {instanceID: 6222}
     - Class: 114
-      Script: {instanceID: 6474}
+      Script: {instanceID: 6472}
     - Class: 114
-      Script: {instanceID: 6478}
+      Script: {instanceID: 6476}
     - Class: 114
-      Script: {instanceID: 6498}
+      Script: {instanceID: 6496}
     - Class: 114
-      Script: {instanceID: 6756}
+      Script: {instanceID: 6754}
     - Class: 114
-      Script: {instanceID: 6790}
+      Script: {instanceID: 6788}
     - Class: 114
-      Script: {instanceID: 6838}
+      Script: {instanceID: 6836}
     - Class: 114
-      Script: {instanceID: 6996}
+      Script: {instanceID: 6994}
     - Class: 114
-      Script: {instanceID: 7082}
+      Script: {instanceID: 7080}
     - Class: 114
-      Script: {instanceID: 7186}
+      Script: {instanceID: 7184}
     - Class: 114
-      Script: {instanceID: 7286}
+      Script: {instanceID: 7284}
     - Class: 114
-      Script: {instanceID: 7292}
+      Script: {instanceID: 7290}
     - Class: 114
-      Script: {instanceID: 7420}
+      Script: {instanceID: 7418}
     - Class: 114
-      Script: {instanceID: 7470}
+      Script: {instanceID: 7468}
     - Class: 114
-      Script: {instanceID: 7526}
+      Script: {instanceID: 7524}
     - Class: 114
-      Script: {instanceID: 7638}
+      Script: {instanceID: 7636}
     - Class: 114
-      Script: {instanceID: 7768}
+      Script: {instanceID: 7766}
     - Class: 114
-      Script: {instanceID: 7944}
+      Script: {instanceID: 7942}
     - Class: 114
-      Script: {instanceID: 8090}
+      Script: {instanceID: 8088}
     - Class: 114
-      Script: {instanceID: 8162}
+      Script: {instanceID: 8160}
     - Class: 114
-      Script: {instanceID: 8596}
+      Script: {instanceID: 8594}
     - Class: 114
-      Script: {instanceID: 8978}
+      Script: {instanceID: 8976}
     - Class: 114
-      Script: {instanceID: 9352}
+      Script: {instanceID: 9350}
     - Class: 114
-      Script: {instanceID: 9678}
+      Script: {instanceID: 9676}
+    - Class: 114
+      Script: {instanceID: 31424}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1418,6 +1421,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 74218d2a4e642a470c21be177352ec2f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JumpPad
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity

@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour
     }
 
     [Header("Connect")]
-    [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject connectUI;
     [SerializeField] private InputField usernameField;
     [SerializeField] private InputField IPField;
@@ -82,7 +81,6 @@ public class UIManager : MonoBehaviour
         if (!IsValidIPAddress(IPField.text))
             return;
 
-        crosshair.SetActive(true);
         usernameField.interactable = false;
         connectUI.SetActive(false);
         playerModel.SetActive(false);
@@ -92,7 +90,6 @@ public class UIManager : MonoBehaviour
 
     public void BackToMain()
     {
-        crosshair.SetActive(false);
         usernameField.interactable = true;
         connectUI.SetActive(true);
         playerModel.SetActive(true);

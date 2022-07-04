@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\JumpPad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Multiplayer\RiptideNetworking (1).xml" />

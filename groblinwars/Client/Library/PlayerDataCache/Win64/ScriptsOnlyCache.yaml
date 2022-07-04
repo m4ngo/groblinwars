@@ -664,7 +664,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVBox
   - hash:
       serializedVersion: 2
-      Hash: 725b3cb81708fe98886d83775ace8003
+      Hash: 7990ee65819e2685b1f958c7a65b8032
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
@@ -898,7 +898,7 @@ ScriptsOnlyBuild:
     className: UniversalRenderPipelineEditorResources
   - hash:
       serializedVersion: 2
-      Hash: d29ae14cabafbeae392a9a4c44aafb9f
+      Hash: d7681baf8e34768fbe3d6e7c6403cd27
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController

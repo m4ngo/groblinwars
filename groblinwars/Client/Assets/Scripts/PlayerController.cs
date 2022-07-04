@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float grabDistance;
     [SerializeField] private LayerMask grabMask;
     [SerializeField] private Transform grabPos;
+
+    //[SerializeField] private GameObject crosshair;
+    [SerializeField] private GameObject canGrabCrosshair;
     private NetworkObject grabbedObject;
 
     private bool[] inputs;
@@ -24,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //adaptive crosshair
+        AdaptiveCrosshair();
+
         //movement inputs
         if (Input.GetKey(KeyCode.W))
             inputs[0] = true;
@@ -78,6 +84,17 @@ public class PlayerController : MonoBehaviour
             grabbedObject = obj;
             grabbedObject.showGraphics = false;
         }
+    }
+
+    private void AdaptiveCrosshair()
+    {
+        Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hit, grabDistance, grabMask);
+        if(hit.collider != null)
+        {
+            canGrabCrosshair.SetActive(true);
+            return;
+        }
+        canGrabCrosshair.SetActive(false);
     }
 
     #region Messages

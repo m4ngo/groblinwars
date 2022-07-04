@@ -162,7 +162,7 @@ MonoBehaviour:
   camProxy: {fileID: 3497558332129271413}
   collider: {fileID: 5618367827703937376}
   gravity: 1.35
-  maxFallSpeed: -65
+  maxFallSpeed: -40
   movementSpeed: 120
   slowDownSpeed: 2
   speedUpSpeed: 0.9

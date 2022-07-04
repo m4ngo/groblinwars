@@ -21,6 +21,8 @@ public class NetworkObject : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (transform.position.y < -5f)
+            DestroyObject();
         SendMovement();
     }
 
