@@ -10,18 +10,24 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] private Player player;
     [SerializeField] private PlayerMovement movement;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform camProxy;
 
     [SerializeField] private NetworkObject grabbedObject;
     [SerializeField] private Transform grabPos;
     [SerializeField] private float grabVelocityThreshold;
 
-    [SerializeField] private float moveDirectionMultipier;
+    [SerializeField] private float velocityMultiplier;
     [SerializeField] private float currentCharge;
     [SerializeField] private float throwThreshold;
     [SerializeField] private float throwForce;
     [SerializeField] private float throwOffset;
     [SerializeField] private float dropOffset;
+
+    public float GetGrabVelocityThreshold()
+    {
+        return grabVelocityThreshold;
+    }
 
     private void Update()
     {
@@ -72,10 +78,10 @@ public class PlayerCombat : MonoBehaviour
                     dropPos.y = 0.5f;
                     grabbedObject.transform.position = dropPos + transform.localPosition;
 
-                    if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+                    if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody objRb))
                     {
-                        rb.velocity = camProxy.forward * ((Mathf.Min(currentCharge, 0.8f) / 0.8f)* throwForce) + camProxy.forward * (movement.MoveDirection.magnitude * moveDirectionMultipier);
-                        rb.angularVelocity = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+                        objRb.velocity = camProxy.forward * ((Mathf.Min(currentCharge, 0.8f) / 0.8f)* throwForce) + camProxy.forward * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude * velocityMultiplier; // (movement.MoveDirection.magnitude * moveDirectionMultipier)
+                        objRb.angularVelocity = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
                     }
                 }
                 else
@@ -87,8 +93,8 @@ public class PlayerCombat : MonoBehaviour
                     dropPos.y = 0f;
                     grabbedObject.transform.position = dropPos + transform.localPosition;
 
-                    if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
-                        rb.velocity = camProxy.forward * (movement.MoveDirection.magnitude * moveDirectionMultipier);
+                    //if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+                       //rb.velocity = camProxy.forward * (movement.MoveDirection.magnitude * moveDirectionMultipier);
                 }
                 grabbedObject.transform.SetParent(null);
                 grabbedObject = null;
@@ -108,7 +114,7 @@ public class PlayerCombat : MonoBehaviour
                 return;
         }
 
-        if (grabbedObject != null) // haha this code is shit and doo and i hate it
+        if (grabbedObject != null) // haha this code is shit and doodoo and i hate it
         {//basically replaces the current grabbed object
             grabbedObject.transform.position = obj.transform.position;
             grabbedObject.transform.SetParent(null);

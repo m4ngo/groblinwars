@@ -9,6 +9,7 @@ using UnityEngine;
 public class NetworkObject : MonoBehaviour
 {
     public static Dictionary<ushort, NetworkObject> list = new Dictionary<ushort, NetworkObject>();
+    public static ushort currentIndex;
 
     public ushort Id { get; private set; }
     public int PrefabIndex { get; private set; }
@@ -25,7 +26,8 @@ public class NetworkObject : MonoBehaviour
 
     public static void Spawn(int prefabIndex, Vector3 position)
     {
-        ushort id = Convert.ToUInt16(list.Count);
+        ushort id = Convert.ToUInt16(currentIndex);
+        currentIndex++;
 
         /*if(list.Count > 0)
         {
