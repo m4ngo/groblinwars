@@ -3,5 +3,6 @@ groblin wars download
 
 STEPS TO DOWNLOAD:
 1. download from github page
-2. open folder and find "Client.exe"
-3. run Client.exe
+2. extract zip file
+3. open folder and find "Client.exe"
+4. run Client.exe
