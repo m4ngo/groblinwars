@@ -2,6 +2,8 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraController
+    - DestroyAfterTime
+    - Explosive
     - GameLogic
     - Interpolator
     - NetworkManager
@@ -38,9 +40,12 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.UI.DebugUIHandlerVector3
     - UnityEngine.Rendering.UI.DebugUIHandlerVector4
     - UnityEngine.Rendering.UI.UIFoldout
+    - UnityEngine.Rendering.Volume
+    - UnityEngine.Rendering.VolumeProfile
     Unity.RenderPipelines.Universal.Editor.dll:
     - UnityEditor.Rendering.Universal.UniversalProjectSettings
     Unity.RenderPipelines.Universal.Runtime.dll:
+    - UnityEngine.Rendering.Universal.Bloom
     - UnityEngine.Rendering.Universal.ForwardRendererData
     - UnityEngine.Rendering.Universal.PostProcessData
     - UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
@@ -57,10 +62,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -174,6 +177,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5004}
     - Class: 114
+      Script: {instanceID: 5044}
+    - Class: 114
       Script: {instanceID: 5212}
     - Class: 114
       Script: {instanceID: 5330}
@@ -181,6 +186,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 5498}
     - Class: 114
       Script: {instanceID: 5660}
+    - Class: 114
+      Script: {instanceID: 5968}
     - Class: 114
       Script: {instanceID: 6176}
     - Class: 114
@@ -238,7 +245,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9414}
     - Class: 114
+      Script: {instanceID: 9600}
+    - Class: 114
       Script: {instanceID: 9740}
+    - Class: 114
+      Script: {instanceID: 42442}
+    - Class: 114
+      Script: {instanceID: 244114}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -246,6 +259,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -1498,7 +1515,19 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 7f89464a38a3d21f01ca98922942c09a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Explosive
+  - hash:
+      serializedVersion: 2
+      Hash: 79f1e4d923cfc803b34c05ae2cb73dac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DestroyAfterTime
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity
-  playerPath: C:/Users/arik4/Documents/GitHub/groblinwars/v1.1.1/Client.exe
+  playerPath: C:/Users/arik4/Documents/GitHub/groblinwars/v0.1.1/Client.exe

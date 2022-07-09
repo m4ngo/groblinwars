@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 moveDirection;
     private Vector3 knockbackDirection;
+    private float cantMove = 0;
 
     private bool[] inputs;
 
@@ -180,20 +181,26 @@ public class PlayerMovement : MonoBehaviour
             collider.center = new Vector3(0, -.1f, 0);
         }
 
-        if (isGrounded)
-        {
-            if (jump)
-                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-        }
+        if (isGrounded && cantMove <= 0 && jump)
+            rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
 
         //moveDirection.y = yVelocity;
         //controller.Move(moveDirection + knockbackDirection);
         Vector3 velocityNoY = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
-        if (inputDirection != Vector2.zero)
-            rb.AddForce(moveDirection * Time.fixedDeltaTime * 100f * (1 / Mathf.Clamp(velocityNoY.magnitude, 0.75f, 5f) * speedUpSpeed));
-        else
-            rb.AddForce(-velocityNoY.normalized * Time.fixedDeltaTime * 100f * slowDownSpeed * Mathf.Clamp(velocityNoY.sqrMagnitude, slowDownSpeed / 2, 20));
+        if(cantMove <= 0)
+        {
+            if (inputDirection != Vector2.zero)
+                rb.AddForce(moveDirection * Time.fixedDeltaTime * 100f * (1 / Mathf.Clamp(velocityNoY.magnitude, 0.75f, 5f) * speedUpSpeed));
+            else
+                rb.AddForce(-velocityNoY.normalized * Time.fixedDeltaTime * 100f * slowDownSpeed * Mathf.Clamp(velocityNoY.sqrMagnitude, slowDownSpeed / 2, 20));
+            rb.drag = 6f;
+        } else
+        {
+            moveDirection = Vector3.zero;
+            cantMove -= Time.fixedDeltaTime;
+            rb.drag = 0.5f;
+        }
 
         SendMovement();
     }
@@ -249,5 +256,10 @@ public class PlayerMovement : MonoBehaviour
         message.AddBool(isCrouching);
         message.AddBool(isCrawling);
         NetworkManager.Singleton.Server.SendToAll(message);
+    }
+
+    public void StopMovement(float time)
+    {
+        cantMove = time;
     }
 }

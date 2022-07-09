@@ -72,6 +72,8 @@
     <Compile Include="Assets\Scripts\TextureResize.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimationManager.cs" />
+    <Compile Include="Assets\Explosive.cs" />
+    <Compile Include="Assets\DestroyAfterTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
