@@ -57,8 +57,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -1174,7 +1176,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerBitField
   - hash:
       serializedVersion: 2
-      Hash: eafcb1f4fafdde2c212d425b47ac74a4
+      Hash: df6cd9cd1620fecd3042ead890488d53
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraController
@@ -1499,4 +1501,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity
-  playerPath: C:/Users/arik4/Desktop/PMG/Builds/Client/Client.exe
+  playerPath: C:/Users/arik4/Documents/GitHub/groblinwars/v1.1.1/Client.exe

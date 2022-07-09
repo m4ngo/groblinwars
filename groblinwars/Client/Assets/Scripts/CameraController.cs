@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private Vector3 defaultPosition;
     [SerializeField] private Vector3 crouchPosition;
+    [SerializeField] private Vector3 crawlPosition;
 
     private float verticalRotation;
     private float horizontalRotation;
@@ -54,9 +55,14 @@ public class CameraController : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
     }
 
-    public void Crouch(bool isCrouching)
+    public void Crouch(bool isCrouching, bool isCrawling)
     {
-        transform.localPosition = isCrouching ? crouchPosition : defaultPosition;
+        if (isCrawling)
+            transform.localPosition = crawlPosition;
+        else if (isCrouching)
+            transform.localPosition = crouchPosition;
+        else
+            transform.localPosition = defaultPosition;
     }
 
     private void SetCursorMode()

@@ -61,12 +61,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\NetworkObjectSpawner.cs" />
+    <Compile Include="Assets\JumpPad.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\NetworkObject.cs" />
     <Compile Include="Assets\Scripts\PlayerCombat.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\JumpPad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Multiplayer\RiptideNetworking (1).xml" />

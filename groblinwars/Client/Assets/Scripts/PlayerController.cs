@@ -43,11 +43,13 @@ public class PlayerController : MonoBehaviour
             inputs[4] = true;
         if (Input.GetKey(KeyCode.LeftShift))
             inputs[5] = true;
+        if (Input.GetKey(KeyCode.LeftControl))
+            inputs[6] = true;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
             SendInteractiveInput(0);
         if (Input.GetKeyDown(KeyCode.Q))
-            SendInteractiveInput(1);
+            SendInteractiveInput(1);*/
 
         if (Input.GetMouseButton(0))
             leftClick = true;

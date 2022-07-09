@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public Vector3 MoveDirection => moveDirection;
 
-    public bool isForcedCrouch { get; private set; }
-
     [SerializeField] private Player player;
     [SerializeField] private PlayerCombat combat;
     //[SerializeField] private CharacterController controller;
@@ -38,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float crouchCheckRadius;
     [SerializeField] private LayerMask crouchCheckMask;
 
+    [SerializeField] private float crawlCheckOffset;
+
     private Vector3 moveDirection;
     private Vector3 knockbackDirection;
 
@@ -45,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
 
     private float crouchTimer;
     private bool isCrouching;
+    private bool isForcedCrouch;
+
+    private float crawlTimer;
+    private bool isCrawling;
+    private bool isForcedCrawl;
 
     public void SetKnockback(Vector3 kb) { knockbackDirection = kb; }
     public Vector3 GetKnockback() { return knockbackDirection; }
@@ -88,12 +93,24 @@ public class PlayerMovement : MonoBehaviour
             CrouchHandler();
             isForcedCrouch = false;
         }
-        Move(inputDirection, inputs[4], isCrouching);
+
+        if (Physics.CheckSphere(new Vector3(crouchChecker.position.x, crouchChecker.position.y - crawlCheckOffset, crouchChecker.position.z), crouchCheckRadius, crouchCheckMask))
+        {
+            isCrawling = true;
+            isForcedCrawl = true;
+        }
+        else
+        {
+            CrawlHandler();
+            isForcedCrawl = false;
+        }
+
+        Move(inputDirection, inputs[4], isCrouching, isCrawling);
     }
 
     private void Initialize()
     {
-
+        
     }
 
     private void CrouchHandler()
@@ -113,7 +130,24 @@ public class PlayerMovement : MonoBehaviour
         crouchTimer = Mathf.Clamp(crouchTimer, 0, crouchThreshold);
     }
 
-    private void Move(Vector2 inputDirection, bool jump, bool crouch)
+    private void CrawlHandler()
+    {
+        if (inputs[6])
+        {
+            crawlTimer += Time.fixedDeltaTime;
+            if (crawlTimer >= crouchThreshold)
+                isCrawling = true;
+        }
+        else
+        {
+            crawlTimer -= Time.fixedDeltaTime;
+            if (crawlTimer <= 0)
+                isCrawling = false;
+        }
+        crawlTimer = Mathf.Clamp(crawlTimer, 0, crouchThreshold);
+    }
+
+    private void Move(Vector2 inputDirection, bool jump, bool crouch, bool crawl)
     {
         //CHANGE MOVEMENT LOGIC LATER
         moveDirection = Vector3.Normalize(camProxy.right * inputDirection.x + Vector3.Normalize(flattenVector3(camProxy.forward)) * inputDirection.y);
@@ -126,7 +160,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //HITBOX SIZE HANDLING
-        if (crouch)
+        if (crawl)
+        {
+            moveDirection *= 0.1f;
+            collider.height = 1f;
+            collider.center = new Vector3(0, -.5f, 0);
+        }
+        else if (crouch)
         {
             moveDirection *= 0.25f;
             collider.height = 1.3f;
@@ -207,6 +247,7 @@ public class PlayerMovement : MonoBehaviour
         message.AddVector3(transform.position);
         message.AddVector3(camProxy.forward);
         message.AddBool(isCrouching);
+        message.AddBool(isCrawling);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 }

@@ -8,6 +8,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private Vector3 lastPosition;
     private bool isCrouching;
+    private bool isCrawling;
 
     public void AnimateBasedOnSpeed()
     {
@@ -15,6 +16,7 @@ public class PlayerAnimationManager : MonoBehaviour
         float distanceMoved = Vector3.Distance(transform.position, lastPosition);
         animator.SetBool("IsMoving", distanceMoved > 0.01f);
         animator.SetBool("IsCrouching", isCrouching);
+        animator.SetBool("IsCrawling", isCrawling);
 
         lastPosition = transform.position;
     }
@@ -22,5 +24,10 @@ public class PlayerAnimationManager : MonoBehaviour
     public void SetCrouching(bool isCrouching)
     {
         this.isCrouching = isCrouching;
+    }
+
+    public void SetCrawling(bool isCrawling)
+    {
+        this.isCrawling = isCrawling;
     }
 }

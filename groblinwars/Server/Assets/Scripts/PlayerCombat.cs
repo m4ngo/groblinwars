@@ -71,11 +71,13 @@ public class PlayerCombat : MonoBehaviour
                 ToggleGrabbedObject(false);
                 if (currentCharge > throwThreshold)
                 {
-                    Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
-                    camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
+                    //Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
+                    //camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
 
-                    Vector3 dropPos = (camRot * transform.forward).normalized * throwOffset;
-                    dropPos.y = 0.5f;
+                    //Vector3 dropPos = (camRot * transform.forward).normalized * throwOffset;
+                    Vector3 dropPos = camProxy.forward.normalized * throwOffset;
+                    dropPos.y *= 1.35f;
+                    dropPos.y = Mathf.Max(dropPos.y, 0f);
                     grabbedObject.transform.position = dropPos + transform.localPosition;
 
                     if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody objRb))
