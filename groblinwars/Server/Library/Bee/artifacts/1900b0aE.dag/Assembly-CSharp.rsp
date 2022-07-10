@@ -337,6 +337,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Explosive.cs"
 "Assets/JumpPad.cs"
+"Assets/NetworkObjectDestroyer.cs"
 "Assets/NetworkObjectSpawner.cs"
 "Assets/Scripts/GameLogic.cs"
 "Assets/Scripts/Multiplayer/MessageExtensions.cs"

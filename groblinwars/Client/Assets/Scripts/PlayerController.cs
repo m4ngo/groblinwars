@@ -55,9 +55,6 @@ public class PlayerController : MonoBehaviour
             leftClick = true;
         if (Input.GetMouseButtonDown(1))
             SendRightClick();
-
-        if (Input.GetKeyDown(KeyCode.G))
-            SendHammer();
     }
 
     private void FixedUpdate()
