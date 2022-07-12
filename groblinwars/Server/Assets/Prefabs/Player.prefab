@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3628866234100604590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0.75}
+  m_LocalPosition: {x: 0, y: -0.35, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4350608189457357255}
@@ -199,11 +199,13 @@ MonoBehaviour:
   grabPos: {fileID: 5503814925085337741}
   grabVelocityThreshold: 5
   velocityMultiplier: 2
-  currentCharge: 0
   throwThreshold: 0.15
   throwForce: 50
-  throwOffset: 1.25
+  throwOffset: 1.5
   dropOffset: 1.35
+  throwMask:
+    serializedVersion: 2
+    m_Bits: 129
 --- !u!54 &8982497871057249478
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -18,11 +18,12 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float grabVelocityThreshold;
 
     [SerializeField] private float velocityMultiplier;
-    [SerializeField] private float currentCharge;
     [SerializeField] private float throwThreshold;
     [SerializeField] private float throwForce;
     [SerializeField] private float throwOffset;
     [SerializeField] private float dropOffset;
+
+    [SerializeField] private LayerMask throwMask;
 
     public float GetGrabVelocityThreshold()
     {
@@ -52,59 +53,67 @@ public class PlayerCombat : MonoBehaviour
         NetworkObject.Spawn(index, position);
     }
 
-    public void LeftClick(bool isHeld)
+    public void LeftClick(float currentCharge)
     {
         //attempt to throw
         if (!isGrabbing)
             return;
 
-        if (isHeld)
+        if (currentCharge > 0)
         {
-            currentCharge += Time.fixedDeltaTime;
-        }
-        else
-        {
-            if(currentCharge > 0)
+            ushort objectId = grabbedObject.GetComponent<NetworkObject>().Id;
+
+            ToggleGrabbedObject(false);
+            if (currentCharge > throwThreshold)
             {
-                ushort objectId = grabbedObject.GetComponent<NetworkObject>().Id;
+                //Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
+                //camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
 
-                ToggleGrabbedObject(false);
-                if (currentCharge > throwThreshold)
-                {
-                    //Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
-                    //camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
-
-                    //Vector3 dropPos = (camRot * transform.forward).normalized * throwOffset;
-                    Vector3 dropPos = camProxy.forward.normalized * throwOffset;
-                    dropPos.y *= 1.35f;
-                    dropPos.y = Mathf.Max(dropPos.y, 0f);
-                    grabbedObject.transform.position = dropPos + transform.localPosition;
-
-                    if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody objRb))
-                    {
-                        objRb.velocity = camProxy.forward * ((Mathf.Min(currentCharge, 0.8f) / 0.8f)* throwForce) + camProxy.forward * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude * velocityMultiplier; // (movement.MoveDirection.magnitude * moveDirectionMultipier)
-                        objRb.angularVelocity = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
-                    }
-                }
-                else
-                {
-                    Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
-                    camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
-
-                    Vector3 dropPos = (camRot * transform.forward).normalized * dropOffset;
+                //Vector3 dropPos = (camRot * transform.forward).normalized * throwOffset;
+                Vector3 dropPos = camProxy.forward.normalized * throwOffset;
+                //dropPos.y *= 1.65f;
+                //dropPos.y = Mathf.Max(dropPos.y, 0.5f);
+                if (dropPos.y > 0f)
                     dropPos.y = 0f;
-                    grabbedObject.transform.position = dropPos + transform.localPosition;
-
-                    //if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
-                       //rb.velocity = camProxy.forward * (movement.MoveDirection.magnitude * moveDirectionMultipier);
+                else
+                    dropPos.y *= 1.65f;
+                if(Physics.Raycast(camProxy.position, camProxy.forward, out RaycastHit hit, 3f, throwMask))
+                {
+                    if (Vector3.Distance(hit.point, camProxy.position) < Vector3.Distance(dropPos, camProxy.position))
+                        dropPos = new Vector3(Mathf.Clamp(dropPos.x, -.35f, .35f), Mathf.Clamp(dropPos.y, 0f, -1f), Mathf.Clamp(dropPos.z, -.35f, .35f));
                 }
-                grabbedObject.transform.SetParent(null);
-                grabbedObject = null;
 
-                UpdateGrabbedObject();
+                grabbedObject.transform.position = dropPos + camProxy.position;
+
+                if (grabbedObject.TryGetComponent(out Rigidbody objRb))
+                {
+                    objRb.velocity = camProxy.forward * ((Mathf.Min(currentCharge, 0.8f) / 0.8f) * throwForce) + camProxy.forward * new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude * velocityMultiplier; // (movement.MoveDirection.magnitude * moveDirectionMultipier)
+                    objRb.angularVelocity = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+                }
+
+                if (grabbedObject.TryGetComponent(out Explosive boom))
+                    boom.SetSafeTime(0.25f, player);
             }
-            currentCharge = 0;
+            else
+            {
+                Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
+                camRot = Quaternion.Euler(new Vector3(0, camRot.eulerAngles.y, 0));
+
+                Vector3 dropPos = (camRot * transform.forward).normalized * dropOffset;
+                dropPos.y = 0f;
+                grabbedObject.transform.position = dropPos + transform.localPosition;
+
+                //if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+                //rb.velocity = camProxy.forward * (movement.MoveDirection.magnitude * moveDirectionMultipier);
+            }
+            if (grabbedObject.TryGetComponent(out Explosive _boom))
+                _boom.enabled = true;
+            grabbedObject.transform.SetParent(null);
+            grabbedObject = null;
+
+            UpdateGrabbedObject();
         }
+        currentCharge = 0;
     }
 
     public void RightClick(ushort id) //this parameter is the clicked object's id
@@ -133,16 +142,19 @@ public class PlayerCombat : MonoBehaviour
         grabbedObject.transform.position = grabPos.position;
         grabbedObject.transform.rotation = camRot;
         grabbedObject.transform.SetParent(grabPos);
+        if (grabbedObject.TryGetComponent(out Explosive boom))
+            boom.enabled = false;
 
         UpdateGrabbedObject();
     }
 
     private void ToggleGrabbedObject(bool a)
     {
-        if (grabbedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        if (grabbedObject.TryGetComponent(out Rigidbody rb))
             rb.isKinematic = a;
-        if (grabbedObject.TryGetComponent<Collider>(out Collider col))
+        foreach (Collider col in grabbedObject.GetComponents<Collider>())
             col.enabled = !a;
+
         isGrabbing = a;
     }
 

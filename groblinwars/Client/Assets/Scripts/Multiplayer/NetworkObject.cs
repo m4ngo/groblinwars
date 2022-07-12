@@ -14,7 +14,7 @@ public class NetworkObject : MonoBehaviour
 
     public bool showGraphics = true;
     [SerializeField] private MeshRenderer graphic;
-    [SerializeField] private Collider collider;
+    [SerializeField] private Collider[] collider;
     [SerializeField] private Interpolator interpolator;
 
     private void OnDestroy()
@@ -33,7 +33,8 @@ public class NetworkObject : MonoBehaviour
     private void Move(ushort tick, Vector3 newPosition, Quaternion rotation)
     {
         graphic.enabled = showGraphics;
-        collider.enabled = showGraphics;
+        foreach (Collider col in collider)
+            col.enabled = showGraphics;
 
         interpolator.NewUpdate(tick, newPosition);
         transform.rotation = rotation;

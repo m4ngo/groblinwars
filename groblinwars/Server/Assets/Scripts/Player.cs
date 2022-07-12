@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
     private static void LeftClick(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
-            player.combat.LeftClick(message.GetBool());
+            player.combat.LeftClick(message.GetFloat());
     }
 
     [MessageHandler((ushort)ClientToServerId.rightClick)]

@@ -12,12 +12,23 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float stunTime;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out PlayerMovement move))
-            return;
+    private float safeTime = 0;
+    private Player player;
 
-        if (other.TryGetComponent(out Rigidbody otherRb))
+    private void Update()
+    {
+        safeTime -= Time.deltaTime;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(safeTime > 0 && collision.collider.TryGetComponent(out Player otherPlayer))
+        {
+            if (otherPlayer == player)
+                return;
+        }
+
+        if (collision.collider.TryGetComponent(out Rigidbody otherRb))
         {
             if (otherRb.velocity.magnitude > velocityThreshold)
                 StartCoroutine(Explode());
@@ -35,7 +46,7 @@ public class Explosive : MonoBehaviour
         foreach (Collider hit in colliders)
         {
             if (hit.TryGetComponent(out Rigidbody rb))
-                rb.velocity = (hit.transform.position - transform.position).normalized * force /(Mathf.Max(1,Mathf.Sqrt(Vector3.Distance(transform.position, hit.transform.position))));
+                rb.velocity = rb.velocity + (hit.transform.position - transform.position).normalized * force /(Mathf.Max(1,Mathf.Sqrt(Vector3.Distance(transform.position, hit.transform.position))));
             if (hit.TryGetComponent(out PlayerMovement move))
                 move.StopMovement(stunTime);
         }
@@ -43,5 +54,11 @@ public class Explosive : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         networkObject.DestroyObject();
+    }
+
+    public void SetSafeTime(float time, Player id) 
+    {
+        safeTime = time;
+        player = id;
     }
 }

@@ -114,7 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showGraphics: 1
   graphic: {fileID: 2028613662993766256}
-  collider: {fileID: 8633887806205174403}
+  collider:
+  - {fileID: 8633887806205174403}
   interpolator: {fileID: 2028613662993766263}
 --- !u!64 &8633887806205174403
 MeshCollider:

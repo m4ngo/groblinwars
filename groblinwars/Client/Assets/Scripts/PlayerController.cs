@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,12 +14,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask grabMask;
     [SerializeField] private Transform grabPos;
 
+    [SerializeField] private GameObject grabbedObjectGraphic;
+
     //[SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject canGrabCrosshair;
     private NetworkObject grabbedObject;
+    [SerializeField] private Slider chargeBar;
 
     private bool[] inputs;
     private bool leftClick = false;
+    private float chargeTime = 0;
 
     private void Start()
     {
@@ -29,6 +34,10 @@ public class PlayerController : MonoBehaviour
     {
         //adaptive crosshair
         AdaptiveCrosshair();
+        if (chargeTime > 0.15f)
+            chargeBar.value = chargeTime / 0.8f;
+        else
+            chargeBar.value = 0;
 
         //movement inputs
         if (Input.GetKey(KeyCode.W))
@@ -52,7 +61,12 @@ public class PlayerController : MonoBehaviour
             SendInteractiveInput(1);*/
 
         if (Input.GetMouseButton(0))
-            leftClick = true;
+            chargeTime += Time.deltaTime;
+        if (Input.GetMouseButtonUp(0))
+        {
+            SendLeftClick();
+            chargeTime = 0;
+        }
         if (Input.GetMouseButtonDown(1))
             SendRightClick();
     }
@@ -60,7 +74,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         SendMovementInput();
-        SendLeftClick();
 
         for (int i = 0; i < inputs.Length; i++)
             inputs[i] = false;
@@ -72,6 +85,7 @@ public class PlayerController : MonoBehaviour
         if (id == -1)
         {
             grabbedObject.showGraphics = true;
+            grabbedObjectGraphic.SetActive(false);
         } 
         else
         {
@@ -82,6 +96,11 @@ public class PlayerController : MonoBehaviour
 
             grabbedObject = obj;
             grabbedObject.showGraphics = false;
+
+            grabbedObjectGraphic.SetActive(true);
+            grabbedObjectGraphic.GetComponent<MeshFilter>().mesh = grabbedObject.GetComponent<MeshFilter>().mesh;
+            grabbedObjectGraphic.GetComponent<MeshRenderer>().material = grabbedObject.GetComponent<MeshRenderer>().material;
+            grabbedObjectGraphic.transform.localScale = grabbedObject.transform.localScale;
         }
     }
 
@@ -116,7 +135,7 @@ public class PlayerController : MonoBehaviour
     private void SendLeftClick()
     {
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.leftClick);
-        message.AddBool(leftClick);
+        message.AddFloat(chargeTime);
         NetworkManager.Singleton.Client.Send(message);
     }
 
