@@ -61,7 +61,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Multiplayer\TransformUpdate.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Explosive.cs" />
+    <Compile Include="Assets\Scripts\Explosive.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\Interpolator.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\NetworkManager.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Assets\Scripts\Multiplayer\NetworkObject.cs" />
     <Compile Include="Assets\Scripts\TextureResize.cs" />
     <Compile Include="Assets\Scripts\Multiplayer\MessageExtensions.cs" />
-    <Compile Include="Assets\DestroyAfterTime.cs" />
+    <Compile Include="Assets\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimationManager.cs" />
   </ItemGroup>
   <ItemGroup>
