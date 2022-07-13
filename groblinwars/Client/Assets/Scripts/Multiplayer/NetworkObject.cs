@@ -32,7 +32,8 @@ public class NetworkObject : MonoBehaviour
 
     private void Move(ushort tick, Vector3 newPosition, Quaternion rotation)
     {
-        graphic.enabled = showGraphics;
+        if(graphic != null)
+            graphic.enabled = showGraphics;
         foreach (Collider col in collider)
             col.enabled = showGraphics;
 

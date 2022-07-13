@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\Multiplayer\MessageExtensions.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\NetworkObjectDestroyer.cs" />
+    <Compile Include="Assets\PlayerOperatedCannon.cs" />
+    <Compile Include="Assets\Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Multiplayer\RiptideNetworking (1).xml" />

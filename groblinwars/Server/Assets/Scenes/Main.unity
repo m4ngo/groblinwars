@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 1671343732}
   prefabIndex: 3
+  useTrigger: 1
 --- !u!65 &41629413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1354,6 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 653489437}
   prefabIndex: 2
+  useTrigger: 1
 --- !u!1 &518551707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,6 +2377,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971325193}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &983759436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983759437}
+  - component: {fileID: 983759438}
+  m_Layer: 0
+  m_Name: PlayerOperatedCannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &983759437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983759436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15, y: -1, z: 18.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &983759438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983759436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c4771ccd112e644adf8eed07ecc7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPos: {fileID: 983759437}
+  prefabIndex: 4
+  useTrigger: 0
 --- !u!1 &989328864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 1379390901}
   prefabIndex: 0
+  useTrigger: 1
 --- !u!1 &1624649632
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,6 +4232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPos: {fileID: 827412089}
   prefabIndex: 1
+  useTrigger: 1
 --- !u!1 &1796873754
 GameObject:
   m_ObjectHideFlags: 0
@@ -5085,6 +5135,8 @@ MonoBehaviour:
   - {fileID: 6063986195479326468, guid: 4cf21d74f1803b240a693be85e64482a, type: 3}
   - {fileID: 6063986195479326468, guid: dd0642db818650d47bfe9959a95bf43f, type: 3}
   - {fileID: 8660397070415220485, guid: 0ab074e4f862ae845a04741622fc9856, type: 3}
+  - {fileID: 6063986195479326468, guid: 38a5ff11784b39b4bace45190f731f4a, type: 3}
+  - {fileID: 6063986195479326468, guid: 17140d6d53103b54a90269984e74d988, type: 3}
 --- !u!1 &2122905430
 GameObject:
   m_ObjectHideFlags: 0

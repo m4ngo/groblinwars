@@ -339,6 +339,7 @@
 "Assets/JumpPad.cs"
 "Assets/NetworkObjectDestroyer.cs"
 "Assets/NetworkObjectSpawner.cs"
+"Assets/PlayerOperatedCannon.cs"
 "Assets/Scripts/GameLogic.cs"
 "Assets/Scripts/Multiplayer/MessageExtensions.cs"
 "Assets/Scripts/Multiplayer/NetworkManager.cs"
@@ -346,6 +347,7 @@
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/PlayerCombat.cs"
 "Assets/Scripts/PlayerMovement.cs"
+"Assets/Trigger.cs"
 -langversion:8.0
 
 /deterministic

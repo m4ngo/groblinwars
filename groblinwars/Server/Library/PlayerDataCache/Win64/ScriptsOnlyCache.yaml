@@ -1,13 +1,18 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - Explosive
     - GameLogic
     - JumpPad
     - NetworkManager
     - NetworkObject
+    - NetworkObjectDestroyer
+    - NetworkObjectSpawner
     - Player
     - PlayerCombat
     - PlayerMovement
+    - PlayerOperatedCannon
+    - Trigger
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -113,81 +118,91 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1998}
     - Class: 114
-      Script: {instanceID: 2596}
+      Script: {instanceID: 2460}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2598}
     - Class: 114
-      Script: {instanceID: 3618}
+      Script: {instanceID: 2702}
     - Class: 114
-      Script: {instanceID: 3818}
+      Script: {instanceID: 3422}
     - Class: 114
-      Script: {instanceID: 3850}
+      Script: {instanceID: 3622}
     - Class: 114
-      Script: {instanceID: 3932}
+      Script: {instanceID: 3822}
     - Class: 114
-      Script: {instanceID: 4124}
+      Script: {instanceID: 3854}
     - Class: 114
-      Script: {instanceID: 4262}
+      Script: {instanceID: 3936}
     - Class: 114
-      Script: {instanceID: 4656}
+      Script: {instanceID: 4128}
     - Class: 114
-      Script: {instanceID: 4786}
+      Script: {instanceID: 4266}
     - Class: 114
-      Script: {instanceID: 5164}
+      Script: {instanceID: 4660}
     - Class: 114
-      Script: {instanceID: 6122}
+      Script: {instanceID: 4790}
     - Class: 114
-      Script: {instanceID: 6144}
+      Script: {instanceID: 5168}
     - Class: 114
-      Script: {instanceID: 6222}
+      Script: {instanceID: 5590}
     - Class: 114
-      Script: {instanceID: 6472}
+      Script: {instanceID: 6128}
     - Class: 114
-      Script: {instanceID: 6476}
+      Script: {instanceID: 6150}
     - Class: 114
-      Script: {instanceID: 6496}
+      Script: {instanceID: 6228}
     - Class: 114
-      Script: {instanceID: 6754}
+      Script: {instanceID: 6478}
     - Class: 114
-      Script: {instanceID: 6788}
+      Script: {instanceID: 6482}
     - Class: 114
-      Script: {instanceID: 6836}
+      Script: {instanceID: 6502}
     - Class: 114
-      Script: {instanceID: 6994}
+      Script: {instanceID: 6760}
     - Class: 114
-      Script: {instanceID: 7080}
+      Script: {instanceID: 6794}
     - Class: 114
-      Script: {instanceID: 7184}
+      Script: {instanceID: 6842}
     - Class: 114
-      Script: {instanceID: 7284}
+      Script: {instanceID: 7000}
+    - Class: 114
+      Script: {instanceID: 7086}
+    - Class: 114
+      Script: {instanceID: 7190}
     - Class: 114
       Script: {instanceID: 7290}
     - Class: 114
-      Script: {instanceID: 7418}
+      Script: {instanceID: 7296}
     - Class: 114
-      Script: {instanceID: 7468}
+      Script: {instanceID: 7424}
     - Class: 114
-      Script: {instanceID: 7524}
+      Script: {instanceID: 7474}
     - Class: 114
-      Script: {instanceID: 7636}
+      Script: {instanceID: 7530}
     - Class: 114
-      Script: {instanceID: 7766}
+      Script: {instanceID: 7642}
     - Class: 114
-      Script: {instanceID: 7942}
+      Script: {instanceID: 7772}
     - Class: 114
-      Script: {instanceID: 8088}
+      Script: {instanceID: 7948}
     - Class: 114
-      Script: {instanceID: 8160}
+      Script: {instanceID: 8094}
     - Class: 114
-      Script: {instanceID: 8594}
+      Script: {instanceID: 8166}
     - Class: 114
-      Script: {instanceID: 8976}
+      Script: {instanceID: 8600}
     - Class: 114
-      Script: {instanceID: 9350}
+      Script: {instanceID: 8982}
     - Class: 114
-      Script: {instanceID: 9676}
+      Script: {instanceID: 9356}
     - Class: 114
-      Script: {instanceID: 31424}
+      Script: {instanceID: 9682}
+    - Class: 114
+      Script: {instanceID: 9820}
+    - Class: 114
+      Script: {instanceID: 60434}
+    - Class: 114
+      Script: {instanceID: 60982}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -307,7 +322,7 @@ ScriptsOnlyBuild:
     className: DepthOfField
   - hash:
       serializedVersion: 2
-      Hash: 7baca247a8482a28fe758f1e3fd5b8ca
+      Hash: b1833beaa4ed4c695461ec8c972ebe1e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -359,6 +374,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnPointerUpMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 985a99c430fb21fea2e4422c9212dcef
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NetworkObjectSpawner
   - hash:
       serializedVersion: 2
       Hash: f1d735cc1a21c3704ab52568f4fbfcf8
@@ -503,6 +524,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnInputFieldEndEditMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: a9bf4ec80325ba0c97fac599c6ba88ea
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Explosive
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -841,6 +868,12 @@ ScriptsOnlyBuild:
     className: UniversalRenderPipelineEditorResources
   - hash:
       serializedVersion: 2
+      Hash: 74218d2a4e642a470c21be177352ec2f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: JumpPad
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1045,7 +1078,7 @@ ScriptsOnlyBuild:
     className: CanvasScaler
   - hash:
       serializedVersion: 2
-      Hash: eac52a70ef4107c1f044b70e5989c3f1
+      Hash: 6ca6b732780c533d8ab0c71f22dbba87
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerCombat
@@ -1273,7 +1306,7 @@ ScriptsOnlyBuild:
     className: UnityOnSubmitMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 252f18f1bc5441d745e54c269905633b
+      Hash: ecfa7c70b17bd9ac2cbfb99e20e54f77
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -1400,6 +1433,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NetworkObjectDestroyer
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnToggleValueChangedMessageListener
@@ -1423,10 +1462,16 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 74218d2a4e642a470c21be177352ec2f
+      Hash: baad4410e2b7f70b084900c3da0fadc5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: JumpPad
+    className: PlayerOperatedCannon
+  - hash:
+      serializedVersion: 2
+      Hash: 9df7f553fc3647178ec057dd4b4e1747
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Trigger
   platform: 19
   scenePathNames:
   - Assets/Scenes/Main.unity

@@ -12,8 +12,16 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float stunTime;
 
+    [SerializeField] private bool instantExplode = false;
+
     private float safeTime = 0;
     private Player player;
+
+    private void Start()
+    {
+        if(instantExplode)
+            StartCoroutine(Explode());
+    }
 
     private void Update()
     {
