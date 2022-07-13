@@ -21,8 +21,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] baseObj;
     [SerializeField] private GameObject shirtObj;
     [SerializeField] private GameObject backpackObj;
+    [SerializeField] private Transform hatHolder;
 
     private string[] colors;
+    private int hat;
     private string username;
 
     private void Update()
@@ -61,7 +63,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void SetPlayerColors(string[] colors)
+    private void SetPlayerColors(string[] colors, int hat)
     {
         for (int i = 0; i < baseObj.Length; i++)
         {
@@ -75,9 +77,12 @@ public class Player : MonoBehaviour
 
         ColorUtility.TryParseHtmlString(colors[1], out Color backpackColor);
         backpackObj.GetComponent<MeshRenderer>().material.color = backpackColor;
+
+        if(hat != -1)
+            Instantiate(GameLogic.Singleton.Hats[hat], hatHolder.position, hatHolder.rotation).transform.SetParent(hatHolder);
     }
 
-    public static void Spawn(ushort id, string username, Vector3 position, string[] colors)
+    public static void Spawn(ushort id, string username, Vector3 position, string[] colors, int hat)
     {
         Player player;
         if (id == NetworkManager.Singleton.Client.Id)
@@ -89,7 +94,7 @@ public class Player : MonoBehaviour
         {
             player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = false;
-            player.SetPlayerColors(colors);
+            player.SetPlayerColors(colors, hat);
         }
 
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
@@ -104,7 +109,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
-        Spawn(message.GetUShort(), message.GetString(), message.GetVector3(), message.GetStrings());
+        Spawn(message.GetUShort(), message.GetString(), message.GetVector3(), message.GetStrings(), message.GetInt());
     }
 
     [MessageHandler((ushort)ServerToClientId.playerMovement)]

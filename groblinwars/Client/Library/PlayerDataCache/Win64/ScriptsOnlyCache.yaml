@@ -62,10 +62,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -388,7 +386,7 @@ ScriptsOnlyBuild:
     className: WhiteBalance
   - hash:
       serializedVersion: 2
-      Hash: fbcc8417477017b62f5e4e9498986a45
+      Hash: d01bf4afec3be2d84ccc34465233d1ac
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -694,7 +692,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVBox
   - hash:
       serializedVersion: 2
-      Hash: 7990ee65819e2685b1f958c7a65b8032
+      Hash: 29deb65dd320ae9b56a06f5a361478e0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UIManager
@@ -1180,7 +1178,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVector4
   - hash:
       serializedVersion: 2
-      Hash: ff237bfc56134a84f309d2629252cd02
+      Hash: 8c92f115cc9c88a5fb5dd15b7dc48d1d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameLogic

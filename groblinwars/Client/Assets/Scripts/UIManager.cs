@@ -40,6 +40,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject backpackObj;
 
     [SerializeField] private string[] colors;
+    [SerializeField] private int hat;
+    [SerializeField] private Transform hatHolder;
+    private GameObject currentHat;
 
     [Space]
 
@@ -100,6 +103,7 @@ public class UIManager : MonoBehaviour
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.name);
         message.AddString(usernameField.text);
         message.AddStrings(colors);
+        message.AddInt(hat);
         NetworkManager.Singleton.Client.Send(message);
     }
     public bool IsValidIPAddress(string IpAddress)
@@ -143,5 +147,17 @@ public class UIManager : MonoBehaviour
         ColorUtility.TryParseHtmlString(color, out Color outColor);
         backpackObj.GetComponent<MeshRenderer>().material.color = outColor;
         colors[2] = color;
+    }
+
+    public void SetHat(int index)
+    {
+        hat = index;
+        if(currentHat != null)
+            Destroy(currentHat);
+        if(hat != -1)
+        {
+            currentHat = Instantiate(GameLogic.Singleton.Hats[hat], hatHolder.position, hatHolder.rotation);
+            currentHat.transform.SetParent(hatHolder);
+        }
     }
 }

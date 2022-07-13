@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     //INDEX 0: base color
     //INDEX 1: shirt color
     //INDEX 2: backpack color
-
+    public int hat;
 
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerCombat combat;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         list.Remove(Id);
     }
 
-    public static void Spawn(ushort id, string username, string[] colors)
+    public static void Spawn(ushort id, string username, string[] colors, int hat)
     {
         foreach (Player otherPlayer in list.Values)
             otherPlayer.SendSpawned(id);
@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
         player.Id = id;
         player.Username = string.IsNullOrEmpty(username) ? $"Guest {id}" : username;
         player.colors = colors;
+        player.hat = hat;
 
         player.SendSpawned();
         list.Add(id, player);
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
         message.AddString(Username);
         message.AddVector3(transform.position);
         message.AddStrings(colors);
+        message.AddInt(hat);
         return message;
     }
     
@@ -73,7 +75,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
     {
-        Spawn(fromClientId, message.GetString(), message.GetStrings());
+        Spawn(fromClientId, message.GetString(), message.GetStrings(), message.GetInt());
     }
 
     [MessageHandler((ushort)ClientToServerId.movementInput)]
