@@ -9,15 +9,27 @@ public class PlayerOperatedCannon : MonoBehaviour
     [SerializeField] private LayerMask hitMask;
     [SerializeField] private float rotateSpeed;
     private float targetDegrees;
+    private float rotateAmount;
+    private float rotateTimer = 0;
 
     private void Update()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, targetDegrees, 0)), Time.deltaTime * rotateSpeed);
+
+        if(rotateAmount != 0)
+        {
+            rotateTimer -= Time.deltaTime;
+            if (rotateTimer <= 0)
+            {
+                targetDegrees += rotateAmount;
+                rotateTimer = 0.2f;
+            }
+        }
     }
 
     public void Rotate(float degrees)
     {
-        targetDegrees += degrees;
+        rotateAmount = degrees;
     }
 
     public void Fire()

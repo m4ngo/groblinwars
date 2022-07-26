@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class Trigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onTriggerEvent;
+    [SerializeField] private UnityEvent onTriggerEnter;
+    [SerializeField] private UnityEvent onTriggerExit;
     [SerializeField] private string[] tags;
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +14,16 @@ public class Trigger : MonoBehaviour
         foreach (string tag in tags)
         {
             if (other.CompareTag(tag))
-                onTriggerEvent.Invoke();
+                onTriggerEnter.Invoke();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        foreach (string tag in tags)
+        {
+            if (other.CompareTag(tag))
+                onTriggerExit.Invoke();
         }
     }
 }

@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.75}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 1.3333334}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584453269}
   m_RootOrder: 0
@@ -123,6 +124,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 3.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6063986195479326472}
   m_RootOrder: 2
@@ -156,6 +158,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 0.25, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6063986195479326472}
   m_RootOrder: 0
@@ -253,6 +256,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 3, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 362138102}
   - {fileID: 8333941194984332459}
@@ -353,8 +357,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2308651624480229305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33333334, y: 1, z: 0}
+  m_LocalPosition: {x: -0.4166667, y: 1, z: 0}
   m_LocalScale: {x: 0.16666667, y: 0.083333336, z: 0.16666667}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584453269}
   m_RootOrder: 1
@@ -435,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d8a269e869d6c4d9411679df18c3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTriggerEvent:
+  onTriggerEnter:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2171327417812961812}
@@ -446,7 +451,22 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: -15
+          m_FloatArgument: -5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2171327417812961812}
+        m_TargetAssemblyTypeName: PlayerOperatedCannon, Assembly-CSharp
+        m_MethodName: Rotate
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -480,8 +500,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2656089940371079011}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.33333334, y: 1, z: 0}
+  m_LocalPosition: {x: 0.4166667, y: 1, z: 0}
   m_LocalScale: {x: 0.16666667, y: 0.083333336, z: 0.16666667}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584453269}
   m_RootOrder: 2
@@ -562,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d8a269e869d6c4d9411679df18c3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTriggerEvent:
+  onTriggerEnter:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2171327417812961812}
@@ -573,7 +594,22 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 15
+          m_FloatArgument: 5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2171327417812961812}
+        m_TargetAssemblyTypeName: PlayerOperatedCannon, Assembly-CSharp
+        m_MethodName: Rotate
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -607,6 +643,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 573653632}
   - {fileID: 1584453269}
@@ -672,8 +709,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8739319936932732851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.33333334}
+  m_LocalPosition: {x: 0, y: 1, z: 0.4166667}
   m_LocalScale: {x: 0.16666667, y: 0.083333336, z: 0.16666667}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584453269}
   m_RootOrder: 3
@@ -754,7 +792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d8a269e869d6c4d9411679df18c3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTriggerEvent:
+  onTriggerEnter:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2171327417812961812}
@@ -769,5 +807,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
   tags:
   - Player
