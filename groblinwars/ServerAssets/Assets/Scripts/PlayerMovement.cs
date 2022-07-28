@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Initialize()
     {
-        
+
     }
 
     private void DeathHandler()
@@ -235,32 +235,6 @@ public class PlayerMovement : MonoBehaviour
 
         SendMovement();
     }
-    /*
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Rigidbody rb = hit.collider.attachedRigidbody;
-
-        // no rigidbody
-        if (rb == null || rb.isKinematic)
-            return;
-
-        // Calculate push direction from move direction,
-        // we only push objects to the sides never up and down
-        if (rb.velocity.magnitude <= combat.GetGrabVelocityThreshold())
-        {
-            if(hit.moveDirection.y > -0.3f)
-            {
-                Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-
-                // If you know how fast your character is trying to move,
-                // then you can also multiply the push velocity by that.
-
-                // Apply the push
-                rb.velocity = pushDir * pushPower;
-            }
-            return;
-        }
-    }*/
 
     private Vector3 flattenVector3(Vector3 vector)
     {

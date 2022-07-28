@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 7874507271110961897}
   - component: {fileID: 2281806464405444840}
   - component: {fileID: 8982497871057249478}
-  - component: {fileID: 5618367827703937376}
+  - component: {fileID: 417113733308185005}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -149,6 +149,7 @@ MonoBehaviour:
   hat: 0
   movement: {fileID: 7874507271110961897}
   combat: {fileID: 2281806464405444840}
+  spawnpoints: []
 --- !u!114 &7874507271110961897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +166,7 @@ MonoBehaviour:
   combat: {fileID: 2281806464405444840}
   rb: {fileID: 8982497871057249478}
   camProxy: {fileID: 3497558332129271413}
-  collider: {fileID: 5618367827703937376}
+  collider: {fileID: 417113733308185005}
   killFloor: -1.25
   gravity: 1.35
   maxFallSpeed: -25
@@ -228,7 +229,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!136 &5618367827703937376
+--- !u!136 &417113733308185005
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
