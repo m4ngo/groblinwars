@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         list.Remove(Id);
     }
 
-    private void Move(ushort tick, Vector3 newPosition, Vector3 forward, bool isCrouching, bool isCrawling)
+    private void Move(ushort tick, Vector3 newPosition, Vector3 forward, bool isCrouching, bool isCrawling, bool isMounted)
     {
         interpolator.NewUpdate(tick, newPosition);
 
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
             if(camController == null)
                 camController = camTransform.GetComponent<CameraController>();
             if (camController != null)
-                camController.Crouch(isCrouching, isCrawling);
+                camController.Crouch(isCrouching, isCrawling, isMounted);
         }
     }
 
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
     private static void PlayerMovement(Message message)
     {
         if (list.TryGetValue(message.GetUShort(), out Player player))
-            player.Move(message.GetUShort(), message.GetVector3(), message.GetVector3(), message.GetBool(), message.GetBool());
+            player.Move(message.GetUShort(), message.GetVector3(), message.GetVector3(), message.GetBool(), message.GetBool(), message.GetBool());
     }
 
     [MessageHandler((ushort)ServerToClientId.grabbedObject)]

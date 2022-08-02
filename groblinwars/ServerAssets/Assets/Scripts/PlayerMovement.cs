@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private float crawlTimer;
     private bool isCrawling;
     private bool isForcedCrawl;
+    private bool isMounted = false;
 
     private float dead = 0;
 
@@ -93,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         if (inputs[3])
             inputDirection.x += 1;
 
-        if (Physics.CheckSphere(crouchChecker.position, crouchCheckRadius, crouchCheckMask))
+        if (Physics.CheckSphere(crouchChecker.position, crouchCheckRadius, crouchCheckMask) && !isMounted)
         {
             isCrouching = true;
             isForcedCrouch = true;
@@ -104,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
             isForcedCrouch = false;
         }
 
-        if (Physics.CheckSphere(new Vector3(crouchChecker.position.x, crouchChecker.position.y - crawlCheckOffset, crouchChecker.position.z), crouchCheckRadius, crouchCheckMask))
+        if (Physics.CheckSphere(new Vector3(crouchChecker.position.x, crouchChecker.position.y - crawlCheckOffset, crouchChecker.position.z), crouchCheckRadius, crouchCheckMask) && !isMounted)
         {
             isCrawling = true;
             isForcedCrawl = true;
@@ -114,6 +115,10 @@ public class PlayerMovement : MonoBehaviour
             CrawlHandler();
             isForcedCrawl = false;
         }
+
+
+        if (transform.parent != null) isMounted = true;
+        else isMounted = false;
 
         Move(inputDirection, inputs[4], isCrouching, isCrawling);
     }
@@ -149,6 +154,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputs[5])
         {
+            if (isMounted)
+                transform.SetParent(null);
             crouchTimer += Time.fixedDeltaTime;
             if (crouchTimer >= crouchThreshold)
                 isCrouching = true;
@@ -166,6 +173,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputs[6])
         {
+            if (isMounted)
+                transform.SetParent(null);
             crawlTimer += Time.fixedDeltaTime;
             if (crawlTimer >= crouchThreshold)
                 isCrawling = true;
@@ -260,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
         message.AddVector3(camProxy.forward);
         message.AddBool(isCrouching);
         message.AddBool(isCrawling);
+        message.AddBool(isMounted);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 

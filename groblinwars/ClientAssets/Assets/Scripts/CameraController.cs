@@ -55,9 +55,11 @@ public class CameraController : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0f, horizontalRotation, 0f);
     }
 
-    public void Crouch(bool isCrouching, bool isCrawling)
+    public void Crouch(bool isCrouching, bool isCrawling, bool isMounted)
     {
-        if (isCrawling)
+        if(isMounted)
+            transform.localPosition = crawlPosition;
+        else if (isCrawling)
             transform.localPosition = crawlPosition;
         else if (isCrouching)
             transform.localPosition = crouchPosition;

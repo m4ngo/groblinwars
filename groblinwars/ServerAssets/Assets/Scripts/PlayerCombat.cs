@@ -55,10 +55,20 @@ public class PlayerCombat : MonoBehaviour
 
     public void LeftClick(float currentCharge)
     {
-        //attempt to throw
+        //this code is dogshit but whatever
+        if(transform.parent != null)
+        {
+            if (transform.parent.parent != null)
+            {
+                if (transform.parent.parent.TryGetComponent(out PlayerOperatedCannon cannon))
+                    cannon.Fire();
+            }
+        }
+
         if (!isGrabbing)
             return;
 
+        //attempt to throw
         if (currentCharge > 0)
         {
             ushort objectId = grabbedObject.GetComponent<NetworkObject>().Id;
@@ -121,8 +131,19 @@ public class PlayerCombat : MonoBehaviour
         //attempt to grab 
         if(NetworkObject.list.TryGetValue(id, out NetworkObject obj))
         {
-            if (Vector3.Distance(obj.transform.position, transform.position) > 5 || obj.transform.parent != null || obj.GetComponent<Rigidbody>().velocity.magnitude > grabVelocityThreshold)
+            if (Vector3.Distance(obj.transform.position, transform.position) > 5 || obj.transform.parent != null)
                 return;
+            if (obj.TryGetComponent(out Rigidbody rb))
+            {
+                if (obj.GetComponent<Rigidbody>().velocity.magnitude > grabVelocityThreshold)
+                    return;
+            }
+        }
+
+        if(obj.TryGetComponent(out PlayerOperatedCannon poc))
+        {
+            poc.EnterCannon(player.Id);
+            return;
         }
 
         if (grabbedObject != null) // haha this code is shit and doodoo and i hate it

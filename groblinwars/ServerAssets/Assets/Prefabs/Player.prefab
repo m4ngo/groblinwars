@@ -204,7 +204,7 @@ MonoBehaviour:
   camProxy: {fileID: 3497558332129271413}
   grabbedObject: {fileID: 0}
   grabPos: {fileID: 5503814925085337741}
-  grabVelocityThreshold: 5
+  grabVelocityThreshold: 1000
   velocityMultiplier: 2
   throwThreshold: 0.15
   throwForce: 50

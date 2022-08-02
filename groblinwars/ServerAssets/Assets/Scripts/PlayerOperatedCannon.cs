@@ -5,38 +5,61 @@ using UnityEngine;
 public class PlayerOperatedCannon : MonoBehaviour
 {
     [SerializeField] private Transform shotPos;
-    [SerializeField] private int explosionId;
+    [SerializeField] private int cannonBallIndex;
     [SerializeField] private LayerMask hitMask;
-    [SerializeField] private float rotateSpeed;
-    private float targetDegrees;
-    private float rotateAmount;
-    private float rotateTimer = 0;
+
+    [SerializeField] private float cannonballSpeed;
+    [SerializeField] private Transform playerHolder;
+    [SerializeField] private GameObject player;
+
+    private float timer = 0f;
 
     private void Update()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, targetDegrees, 0)), Time.deltaTime * rotateSpeed);
-
-        if(rotateAmount != 0)
+        if(playerHolder.childCount <= 0)
         {
-            rotateTimer -= Time.deltaTime;
-            if (rotateTimer <= 0)
+            if(player != null)
             {
-                targetDegrees += rotateAmount;
-                rotateTimer = 0.2f;
+                player.TryGetComponent(out Rigidbody rb);
+                rb.isKinematic = false;
+                player.transform.position = transform.position + new Vector3(0, 2, 0);
+                player.transform.localEulerAngles = Vector3.zero;
             }
+            player = null; 
+        } 
+        else
+        {
+            player.transform.localPosition = Vector3.zero;
+            if (player.TryGetComponent(out PlayerMovement move))
+                move.StopMovement(0.5f);
+            transform.rotation = player.transform.GetChild(1).rotation;
+            player.TryGetComponent(out Rigidbody rb);
+            rb.isKinematic = true;
         }
-    }
 
-    public void Rotate(float degrees)
-    {
-        rotateAmount = degrees;
+        timer -= Time.deltaTime;
     }
 
     public void Fire()
     {
-        if (!Physics.Raycast(shotPos.position, shotPos.forward, out RaycastHit hit, 500, hitMask))
+        if (timer > 0)
             return;
 
-        NetworkObject.Spawn(explosionId, hit.point);
+        GameObject cannonball = NetworkObject.Spawn(cannonBallIndex, shotPos.position);
+        cannonball.GetComponent<Rigidbody>().velocity = transform.forward * cannonballSpeed;
+        timer = 1.0f;
+    }
+
+    public void EnterCannon(ushort id)
+    {
+        if(player == null)
+        {
+            Player.list.TryGetValue(id, out Player temp);
+            player = temp.gameObject;
+            player.transform.SetParent(playerHolder);
+            player.transform.localPosition = Vector3.zero;
+            if (player.TryGetComponent(out PlayerMovement move))
+                move.StopMovement(0.5f);
+        }
     }
 }

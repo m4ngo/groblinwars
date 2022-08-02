@@ -26,7 +26,7 @@ public class NetworkObject : MonoBehaviour
         SendMovement();
     }
 
-    public static void Spawn(int prefabIndex, Vector3 position)
+    public static GameObject Spawn(int prefabIndex, Vector3 position)
     {
         ushort id = Convert.ToUInt16(currentIndex);
         currentIndex++;
@@ -44,6 +44,8 @@ public class NetworkObject : MonoBehaviour
 
         networkObject.SendSpawned();
         list.Add(id, networkObject);
+
+        return networkObject.gameObject;
     }
 
     #region Messages

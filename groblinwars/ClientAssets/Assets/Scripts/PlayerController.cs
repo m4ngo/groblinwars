@@ -158,9 +158,21 @@ public class PlayerController : MonoBehaviour
         Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hit, grabDistance, grabMask);
         if(hit.collider != null)
         {
-            Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.rightClick);
-            message.AddUShort(hit.collider.GetComponent<NetworkObject>().Id);
-            NetworkManager.Singleton.Client.Send(message);
+            if(!hit.collider.TryGetComponent(out NetworkObject obj))
+            {
+                if(hit.collider.transform.parent.TryGetComponent(out NetworkObject parentObj))
+                {
+                    Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.rightClick);
+                    message.AddUShort(parentObj.Id);
+                    NetworkManager.Singleton.Client.Send(message);
+                }
+            }
+            else
+            {
+                Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.rightClick);
+                message.AddUShort(hit.collider.GetComponent<NetworkObject>().Id);
+                NetworkManager.Singleton.Client.Send(message);
+            }
         }
     }
     #endregion
