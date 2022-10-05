@@ -78,6 +78,7 @@ public class PlayerCombat : MonoBehaviour
                 {
                     move.StopMovement(0.15f);
                     move.SetLastId(player.Id);
+                    move.transform.SetParent(null);
                 }
             }
             return;

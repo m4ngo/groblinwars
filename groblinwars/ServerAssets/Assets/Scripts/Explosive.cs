@@ -59,6 +59,7 @@ public class Explosive : MonoBehaviour
             {
                 move.StopMovement(stunTime);
                 move.SetLastId(networkObject.lastId);
+                move.transform.SetParent(null);
             }
         }
 
