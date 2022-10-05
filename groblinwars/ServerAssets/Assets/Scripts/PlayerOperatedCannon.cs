@@ -6,7 +6,6 @@ public class PlayerOperatedCannon : MonoBehaviour
 {
     [SerializeField] private Transform shotPos;
     [SerializeField] private int cannonBallIndex;
-    [SerializeField] private LayerMask hitMask;
 
     [SerializeField] private float cannonballSpeed;
     [SerializeField] private Transform playerHolder;

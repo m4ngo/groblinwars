@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     private float horizontalRotation;
 
     private bool cursorLocked;
+    [SerializeField] private Camera cam;
 
     private void OnValidate()
     {
@@ -37,6 +38,7 @@ public class CameraController : MonoBehaviour
             Look();
 
         Debug.DrawRay(transform.position, transform.forward * 2f, Color.green);
+        cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, 90, Time.deltaTime * 14.5f);
     }
 
     private void Look()
@@ -79,5 +81,10 @@ public class CameraController : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void CameraPulse()
+    {
+        cam.fieldOfView = 95;
     }
 }

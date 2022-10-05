@@ -3,6 +3,7 @@ using RiptideNetworking.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Net;
@@ -35,10 +36,17 @@ public class UIManager : MonoBehaviour
     [Space]
 
     [Header("Customize")]
+    [SerializeField] private GameObject customizationMenu;
+    [SerializeField] private GameObject settingsMenu;
+
     [SerializeField] private GameObject playerModel;
     [SerializeField] private GameObject[] baseObj;
     [SerializeField] private GameObject shirtObj;
     [SerializeField] private GameObject backpackObj;
+
+    [SerializeField] private TMP_InputField baseColorInput;
+    [SerializeField] private TMP_InputField shirtColorInput;
+    [SerializeField] private TMP_InputField backpackColorInput;
 
     [SerializeField] private string[] colors;
     [SerializeField] private int hat;
@@ -50,15 +58,27 @@ public class UIManager : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private InputField sensitivityField;
+    [SerializeField] private InputField menuSensField;
 
     [Space]
 
     [Header("Death")]
     [SerializeField] private GameObject deathScreen;
 
+    private SettingsHandler handler;
+
     private void Awake()
     {
         Singleton = this;
+        baseColorInput.onEndEdit.AddListener(delegate { SetBaseColor(baseColorInput.text) ; });
+        shirtColorInput.onEndEdit.AddListener(delegate { SetShirtColor(shirtColorInput.text); });
+        backpackColorInput.onEndEdit.AddListener(delegate { SetBackpackColor(backpackColorInput.text); });
+    }
+
+    private void Start()
+    {
+        handler = GameObject.FindGameObjectWithTag("SettingsHandler").GetComponent<SettingsHandler>();
+        menuSensField.text = handler.aimSensitivity + "";
     }
 
     private void Update()
@@ -73,13 +93,16 @@ public class UIManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
                 pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
         }
+
+        sensitivityField.text = menuSensField.text;
+        handler.aimSensitivity = float.Parse(sensitivityField.text);
     }
 
     public void SetDeathScreen(bool active) { deathScreen.SetActive(active); }
 
     public float GetSensitivity()
     {
-        return float.Parse(sensitivityField.text);
+        return handler.aimSensitivity;
     }
 
     public bool GetPaused()
@@ -145,24 +168,36 @@ public class UIManager : MonoBehaviour
 
     public void SetBaseColor(string color)
     {
+        if (color.Length < 6) return;
+        if (!color.StartsWith("#")) color = "#" + color;
+                 
         ColorUtility.TryParseHtmlString(color, out Color outColor);
         foreach (GameObject obj in baseObj)
         {
             obj.GetComponent<MeshRenderer>().material.color = outColor;
         }
         colors[0] = color;
+        baseColorInput.text = color.Remove(0,1);
     }
     public void SetShirtColor(string color)
     {
+        if (color.Length < 6) return;
+        if (!color.StartsWith("#")) color = "#" + color;
+
         ColorUtility.TryParseHtmlString(color, out Color outColor);
         shirtObj.GetComponent<MeshRenderer>().material.color = outColor;
         colors[1] = color;
+        shirtColorInput.text = color.Remove(0, 1);
     }
     public void SetBackpackColor(string color)
     {
+        if (color.Length < 6) return;
+        if (!color.StartsWith("#")) color = "#" + color;
+
         ColorUtility.TryParseHtmlString(color, out Color outColor);
         backpackObj.GetComponent<MeshRenderer>().material.color = outColor;
         colors[2] = color;
+        backpackColorInput.text = color.Remove(0, 1);
     }
 
     public void SetHat(int index)
@@ -175,5 +210,15 @@ public class UIManager : MonoBehaviour
             currentHat = Instantiate(GameLogic.Singleton.Hats[hat], hatHolder.position, hatHolder.rotation);
             currentHat.transform.SetParent(hatHolder);
         }
+    }
+
+    public void ToggleCustomizationMenu()
+    {
+        customizationMenu.SetActive(!customizationMenu.activeInHierarchy);
+    }
+
+    public void ToggleSettingsMenu()
+    {
+        settingsMenu.SetActive(!settingsMenu.activeInHierarchy);
     }
 }

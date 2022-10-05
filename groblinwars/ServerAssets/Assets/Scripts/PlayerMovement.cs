@@ -1,6 +1,7 @@
 using RiptideNetworking;
 using RiptideNetworking.Utils;
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isMounted = false;
 
     private float dead = 0;
+    private int lastId = -1;
 
     public void SetKnockback(Vector3 kb) { knockbackDirection = kb; }
     public Vector3 GetKnockback() { return knockbackDirection; }
@@ -136,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             rb.isKinematic = true;
             transform.position = new Vector3(0, 15, 0);
             SendDeath(false);
+            lastId = -1;
         }
 
         if (dead > 0)
@@ -230,11 +233,27 @@ public class PlayerMovement : MonoBehaviour
 
         if(cantMove <= 0)
         {
-            if (inputDirection != Vector2.zero)
-                rb.AddForce(moveDirection * Time.fixedDeltaTime * 100f * (1 / Mathf.Clamp(velocityNoY.magnitude, 0.75f, 5f) * speedUpSpeed));
+            //this code is dogshit but whatever
+            if (transform.parent != null)
+            {
+                if (transform.parent.parent != null)
+                {
+                    transform.parent.parent.TryGetComponent(out Rigidbody rb);
+                    if (inputDirection != Vector2.zero)
+                        rb.AddForce(moveDirection * Time.fixedDeltaTime * 100f * (1 / Mathf.Clamp(velocityNoY.magnitude, 0.75f, 5f) * speedUpSpeed));
+                    else
+                        rb.AddForce(-velocityNoY.normalized * Time.fixedDeltaTime * 100f * slowDownSpeed * Mathf.Clamp(velocityNoY.sqrMagnitude, slowDownSpeed / 2, 20));
+                    rb.drag = 6f;
+                }
+            } 
             else
-                rb.AddForce(-velocityNoY.normalized * Time.fixedDeltaTime * 100f * slowDownSpeed * Mathf.Clamp(velocityNoY.sqrMagnitude, slowDownSpeed / 2, 20));
-            rb.drag = 6f;
+            {
+                if (inputDirection != Vector2.zero)
+                    rb.AddForce(moveDirection * Time.fixedDeltaTime * 100f * (1 / Mathf.Clamp(velocityNoY.magnitude, 0.75f, 5f) * speedUpSpeed));
+                else
+                    rb.AddForce(-velocityNoY.normalized * Time.fixedDeltaTime * 100f * slowDownSpeed * Mathf.Clamp(velocityNoY.sqrMagnitude, slowDownSpeed / 2, 20));
+                rb.drag = 6f;
+            }
         } else
         {
             moveDirection = Vector3.zero;
@@ -277,6 +296,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.playerDied);
         message.AddUShort(player.Id);
+        if(lastId == -1)
+            message.AddUShort(Convert.ToUInt16(player.Id));
+        else
+            message.AddUShort(Convert.ToUInt16(lastId));
         message.AddBool(alive);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
@@ -284,5 +307,24 @@ public class PlayerMovement : MonoBehaviour
     public void StopMovement(float time)
     {
         cantMove = time;
+    }
+
+    public void SetMovementSpeed(float speed)
+    {
+        movementSpeed = speed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Grabbable") && collision.collider.TryGetComponent(out NetworkObject obj))
+        {
+            lastId = obj.lastId;
+            print(lastId);
+        }
+    }
+
+    public void SetLastId(int lastId)
+    {
+        this.lastId = lastId;
     }
 }

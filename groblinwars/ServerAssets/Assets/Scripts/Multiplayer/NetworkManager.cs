@@ -14,6 +14,7 @@ public enum ServerToClientId : ushort
     networkObjectDestroyed,
     grabbedObject,
     playerDied,
+    playerAttack,
 }
 
 public enum ClientToServerId : ushort

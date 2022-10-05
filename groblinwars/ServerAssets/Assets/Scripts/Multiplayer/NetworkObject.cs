@@ -14,6 +14,8 @@ public class NetworkObject : MonoBehaviour
     public ushort Id { get; private set; }
     public int PrefabIndex { get; private set; }
 
+    public int lastId = -1;
+
     private void OnDestroy()
     {
         list.Remove(Id);
@@ -24,6 +26,12 @@ public class NetworkObject : MonoBehaviour
         if (transform.position.y < -5f && transform.parent == null)
             DestroyObject();
         SendMovement();
+
+        if(TryGetComponent(out Rigidbody rb))
+        {
+            if (rb.velocity.magnitude <= 5)
+                lastId = -1;
+        }
     }
 
     public static GameObject Spawn(int prefabIndex, Vector3 position)
@@ -38,6 +46,30 @@ public class NetworkObject : MonoBehaviour
         }*/
 
         NetworkObject networkObject = Instantiate(GameLogic.Singleton.NetworkPrefabs[prefabIndex], position, Quaternion.identity).GetComponent<NetworkObject>();
+        networkObject.Id = id;
+        networkObject.PrefabIndex = prefabIndex;
+        print(Convert.ToInt32(id));
+
+        networkObject.SendSpawned();
+        list.Add(id, networkObject);
+
+        return networkObject.gameObject;
+    }
+
+    public static GameObject Spawn(int prefabIndex, Vector3 position, Transform parent)
+    {
+        ushort id = Convert.ToUInt16(currentIndex);
+        currentIndex++;
+
+        /*if(list.Count > 0)
+        {
+            foreach (NetworkObject otherObject in list.Values)
+                otherObject.SendSpawned(id);
+        }*/
+
+        NetworkObject networkObject = Instantiate(GameLogic.Singleton.NetworkPrefabs[prefabIndex], position, Quaternion.identity).GetComponent<NetworkObject>();
+        networkObject.transform.SetParent(parent);
+        print(networkObject.transform.parent);
         networkObject.Id = id;
         networkObject.PrefabIndex = prefabIndex;
         print(Convert.ToInt32(id));

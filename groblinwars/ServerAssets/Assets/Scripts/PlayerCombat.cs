@@ -66,7 +66,22 @@ public class PlayerCombat : MonoBehaviour
         }
 
         if (!isGrabbing)
+        {
+            Collider[] colliders = Physics.OverlapCapsule(transform.position + camProxy.forward, transform.position + camProxy.forward  * 2.5f, 0.25f);
+            PlayerAttackAnimation();
+            foreach (Collider hit in colliders)
+            {
+                if (hit.transform == transform) continue;
+                if (hit.TryGetComponent(out Rigidbody rb))
+                    rb.velocity = rb.velocity + (hit.transform.position - transform.position).normalized * 15f;
+                if (hit.TryGetComponent(out PlayerMovement move))
+                {
+                    move.StopMovement(0.15f);
+                    move.SetLastId(player.Id);
+                }
+            }
             return;
+        }
 
         //attempt to throw
         if (currentCharge > 0)
@@ -74,6 +89,7 @@ public class PlayerCombat : MonoBehaviour
             ushort objectId = grabbedObject.GetComponent<NetworkObject>().Id;
 
             ToggleGrabbedObject(false);
+            grabbedObject.lastId = player.Id;
             if (currentCharge > throwThreshold)
             {
                 //Quaternion camRot = Quaternion.LookRotation(camProxy.forward, Vector3.up);
@@ -103,6 +119,9 @@ public class PlayerCombat : MonoBehaviour
 
                 if (grabbedObject.TryGetComponent(out Explosive boom))
                     boom.SetSafeTime(0.25f, player);
+
+                if (grabbedObject.TryGetComponent(out ThrownTrigger trigger))
+                    trigger.Thrown();
             }
             else
             {
@@ -131,8 +150,11 @@ public class PlayerCombat : MonoBehaviour
         //attempt to grab 
         if(NetworkObject.list.TryGetValue(id, out NetworkObject obj))
         {
-            if (Vector3.Distance(obj.transform.position, transform.position) > 5 || obj.transform.parent != null)
+            if (Vector3.Distance(obj.transform.position, transform.position) > 5)
                 return;
+            if (obj.transform.parent != null)
+                if (obj.transform.parent.TryGetComponent(out Player temp))
+                    return;
             if (obj.TryGetComponent(out Rigidbody rb))
             {
                 if (obj.GetComponent<Rigidbody>().velocity.magnitude > grabVelocityThreshold)
@@ -140,9 +162,15 @@ public class PlayerCombat : MonoBehaviour
             }
         }
 
-        if(obj.TryGetComponent(out PlayerOperatedCannon poc))
+        if (obj.TryGetComponent(out PlayerOperatedCannon poc))
         {
             poc.EnterCannon(player.Id);
+            return;
+        }
+
+        if (obj.TryGetComponent(out Vehicle veh))
+        {
+            veh.EnterVehicle(player.Id);
             return;
         }
 
@@ -183,8 +211,15 @@ public class PlayerCombat : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.grabbedObject);
         message.AddUShort(player.Id);
-        message.AddInt(grabbedObject != null ?  grabbedObject.Id : -1);
+        message.AddInt(grabbedObject != null ? grabbedObject.Id : -1);
         NetworkManager.Singleton.Server.Send(message, player.Id);
+    }
+
+    private void PlayerAttackAnimation()
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.playerAttack);
+        message.AddUShort(player.Id);
+        NetworkManager.Singleton.Server.SendToAll(message);
     }
 
     public void Hammer(ushort id)

@@ -56,7 +56,10 @@ public class Explosive : MonoBehaviour
             if (hit.TryGetComponent(out Rigidbody rb))
                 rb.velocity = rb.velocity + (hit.transform.position - transform.position).normalized * force /(Mathf.Max(1,Mathf.Sqrt(Vector3.Distance(transform.position, hit.transform.position))));
             if (hit.TryGetComponent(out PlayerMovement move))
+            {
                 move.StopMovement(stunTime);
+                move.SetLastId(networkObject.lastId);
+            }
         }
 
         yield return new WaitForEndOfFrame();

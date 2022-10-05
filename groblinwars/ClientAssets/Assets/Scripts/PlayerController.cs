@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform camTransform;
+    [SerializeField] private CameraController cam;
 
     [SerializeField] private float grabDistance;
     [SerializeField] private LayerMask grabMask;
@@ -20,7 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject canGrabCrosshair;
     private NetworkObject grabbedObject;
     [SerializeField] private Slider chargeBar;
+    [SerializeField] private TMP_Text killFeed;
 
+    private float deleteKillFeedTimer = 5f;
+    private int killFeedLength = 0;
     private bool[] inputs;
     private bool leftClick = false;
     private float chargeTime = 0;
@@ -64,6 +69,7 @@ public class PlayerController : MonoBehaviour
             chargeTime += Time.deltaTime;
         if (Input.GetMouseButtonUp(0))
         {
+            cam.CameraPulse();
             SendLeftClick();
             chargeTime = 0;
         }
@@ -72,6 +78,27 @@ public class PlayerController : MonoBehaviour
 
         if(grabbedObject == null)
             grabbedObjectGraphic.SetActive(false);
+
+        if(killFeedLength > 1)
+        {
+            deleteKillFeedTimer -= Time.deltaTime;
+            if(deleteKillFeedTimer <= 0)
+            {
+                int stringIndexToCut = 0;
+                for (int i = 1; i < killFeed.text.Length - 2; i++)
+                {
+                    if (killFeed.text.Substring(i, 2).Equals("\n"))
+                    {
+                        stringIndexToCut = i;
+                        print(stringIndexToCut+ "string index to cut");
+                        break;
+                    }
+                }
+                killFeed.text.Remove(0, stringIndexToCut + 2);
+                killFeedLength--;
+                deleteKillFeedTimer = 5f;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -116,6 +143,18 @@ public class PlayerController : MonoBehaviour
             return;
         }
         canGrabCrosshair.SetActive(false);
+    }
+
+    public void KillFeed(ushort victimId, ushort killerId)
+    {
+        Player.list.TryGetValue(victimId, out Player victim);
+        Player.list.TryGetValue(killerId, out Player killer);
+        string killFeedOriginalText = killFeed.text;
+        if (victimId == killerId)
+            killFeed.text = killer.GetUsername() + " got yeeted \n" +killFeedOriginalText;
+        else
+            killFeed.text = killer.GetUsername() + " bonked " + victim.GetUsername() + "\n" + killFeedOriginalText;
+        killFeedLength++;
     }
 
     #region Messages

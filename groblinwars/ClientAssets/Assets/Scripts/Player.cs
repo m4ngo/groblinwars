@@ -1,5 +1,6 @@
 using RiptideNetworking;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -82,6 +83,13 @@ public class Player : MonoBehaviour
             Instantiate(GameLogic.Singleton.Hats[hat], hatHolder.position, hatHolder.rotation).transform.SetParent(hatHolder);
     }
 
+    public void Attack()
+    {
+        if (IsLocal)
+            return;
+        animationManager.Attack();
+    }
+
     public static void Spawn(ushort id, string username, Vector3 position, string[] colors, int hat)
     {
         Player player;
@@ -105,8 +113,11 @@ public class Player : MonoBehaviour
         list.Add(id, player);
     }
 
-    public void Die(bool alive)
+    public void Die(ushort victimId, ushort killerId, bool alive)
     {
+        if(!alive)
+            FindObjectOfType<PlayerController>().KillFeed(victimId, killerId);
+
         if (!IsLocal)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -116,6 +127,11 @@ public class Player : MonoBehaviour
         }
         else
             UIManager.Singleton.SetDeathScreen(!alive);
+    }
+
+    public string GetUsername()
+    {
+        return username;
     }
 
     #region Messages
@@ -143,7 +159,16 @@ public class Player : MonoBehaviour
     private static void PlayerDied(Message message)
     {
         if (Player.list.TryGetValue(message.GetUShort(), out Player player))
-            player.Die(message.GetBool());
+        {
+            player.Die(player.Id, message.GetUShort(), message.GetBool());
+        }
+    }
+
+    [MessageHandler((ushort)ServerToClientId.playerAttack)]
+    private static void PlayerAttack(Message message)
+    {
+        if (Player.list.TryGetValue(message.GetUShort(), out Player player))
+            player.Attack();
     }
     #endregion
 }
