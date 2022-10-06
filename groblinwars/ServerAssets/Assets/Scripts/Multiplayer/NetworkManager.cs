@@ -15,6 +15,8 @@ public enum ServerToClientId : ushort
     grabbedObject,
     playerDied,
     playerAttack,
+    victory,
+    lavaLevel,
 }
 
 public enum ClientToServerId : ushort

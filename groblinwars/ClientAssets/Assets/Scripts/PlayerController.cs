@@ -22,13 +22,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject canGrabCrosshair;
     private NetworkObject grabbedObject;
     [SerializeField] private Slider chargeBar;
-    [SerializeField] private TMP_Text killFeed;
+    [SerializeField] public TMP_Text killFeed;
 
     private float deleteKillFeedTimer = 5f;
     private int killFeedLength = 0;
     private bool[] inputs;
     private bool leftClick = false;
     private float chargeTime = 0;
+    private float clearKillFeed = 0;
 
     private void Start()
     {
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         if(grabbedObject == null)
             grabbedObjectGraphic.SetActive(false);
-
+        /*
         if(killFeedLength > 1)
         {
             deleteKillFeedTimer -= Time.deltaTime;
@@ -97,6 +98,15 @@ public class PlayerController : MonoBehaviour
                 killFeed.text.Remove(0, stringIndexToCut + 2);
                 killFeedLength--;
                 deleteKillFeedTimer = 5f;
+            }
+        }*/
+
+        if(clearKillFeed > 0)
+        {
+            clearKillFeed -= Time.deltaTime;
+            if(clearKillFeed <= 0)
+            {
+                killFeed.text = "";
             }
         }
     }
@@ -155,6 +165,11 @@ public class PlayerController : MonoBehaviour
         else
             killFeed.text = killer.GetUsername() + " bonked " + victim.GetUsername() + "\n" + killFeedOriginalText;
         killFeedLength++;
+    }
+
+    public void KillFeedClear()
+    {
+        clearKillFeed = 5f;
     }
 
     #region Messages

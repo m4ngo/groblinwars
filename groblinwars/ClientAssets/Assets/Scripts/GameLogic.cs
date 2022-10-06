@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
+using RiptideNetworking.Utils;
 
 public class GameLogic : MonoBehaviour
 {
@@ -34,5 +36,11 @@ public class GameLogic : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
+    }
+
+    [MessageHandler((ushort)ServerToClientId.lavaLevel)]
+    private static void LavaLevel(Message message)
+    {
+        GameObject.FindWithTag("Lava").transform.position = new Vector3(0, message.GetFloat(), 0);
     }
 }

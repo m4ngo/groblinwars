@@ -64,6 +64,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Death")]
     [SerializeField] private GameObject deathScreen;
+    public TMP_Text winText;
+    private float winTextDelay;
 
     private SettingsHandler handler;
 
@@ -96,6 +98,12 @@ public class UIManager : MonoBehaviour
 
         sensitivityField.text = menuSensField.text;
         handler.aimSensitivity = float.Parse(sensitivityField.text);
+
+        winTextDelay -= Time.deltaTime;
+        if (winTextDelay <= 0)
+        {
+            winText.text = "";
+        }
     }
 
     public void SetDeathScreen(bool active) { deathScreen.SetActive(active); }
@@ -220,5 +228,11 @@ public class UIManager : MonoBehaviour
     public void ToggleSettingsMenu()
     {
         settingsMenu.SetActive(!settingsMenu.activeInHierarchy);
+    }
+
+    public void SetWinScreen(string name)
+    {
+        winText.text = name + " won!";
+        winTextDelay = 5f;
     }
 }

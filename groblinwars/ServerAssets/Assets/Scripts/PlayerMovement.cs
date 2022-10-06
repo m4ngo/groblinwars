@@ -82,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         DeathHandler();
+        killFloor = GameLogic.Singleton.GetKillFloor();
     }
 
     private void FixedUpdate()
@@ -134,9 +135,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform.position.y <= killFloor)
         {
-            dead = 5;
+            if (Player.list.Count > 1)
+                dead = 999999f;
+            else
+                dead = 2f;
             rb.isKinematic = true;
-            transform.position = new Vector3(0, 15, 0);
+            transform.position = new Vector3(0, 25, 0);
             SendDeath(false);
             lastId = -1;
         }
@@ -326,5 +330,16 @@ public class PlayerMovement : MonoBehaviour
     public void SetLastId(int lastId)
     {
         this.lastId = lastId;
+    }
+
+    public float GetDead() { return dead; }
+
+    public void SetDead(float temp) { dead = temp; }
+
+    public void Respawn()
+    {
+        rb.isKinematic = false;
+        transform.position = NetworkManager.Singleton.GetSpawnpoint();
+        SendDeath(true);
     }
 }

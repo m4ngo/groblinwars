@@ -165,12 +165,16 @@ public class PlayerCombat : MonoBehaviour
 
         if (obj.TryGetComponent(out PlayerOperatedCannon poc))
         {
+            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER)
+                return;
             poc.EnterCannon(player.Id);
             return;
         }
 
         if (obj.TryGetComponent(out Vehicle veh))
         {
+            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER)
+                return;
             veh.EnterVehicle(player.Id);
             return;
         }

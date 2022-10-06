@@ -167,7 +167,7 @@ MonoBehaviour:
   rb: {fileID: 8982497871057249478}
   camProxy: {fileID: 3497558332129271413}
   collider: {fileID: 417113733308185005}
-  killFloor: -1.25
+  killFloor: -3
   gravity: 1.35
   maxFallSpeed: -25
   movementSpeed: 120

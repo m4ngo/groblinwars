@@ -170,5 +170,16 @@ public class Player : MonoBehaviour
         if (Player.list.TryGetValue(message.GetUShort(), out Player player))
             player.Attack();
     }
+
+    [MessageHandler((ushort)ServerToClientId.victory)]
+    private static void Winner(Message message)
+    {
+        if (Player.list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            print("yes");
+            UIManager.Singleton.SetWinScreen(player.username);
+            FindObjectOfType<PlayerController>().KillFeedClear();
+        }
+    }
     #endregion
 }
