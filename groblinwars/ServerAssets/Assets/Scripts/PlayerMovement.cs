@@ -1,5 +1,5 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -287,7 +287,7 @@ public class PlayerMovement : MonoBehaviour
         if (NetworkManager.Singleton.CurrentTick % 2 != 0)
             return;
 
-        Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.playerMovement);
+        Message message = Message.Create(MessageSendMode.Unreliable, ServerToClientId.playerMovement);
         message.AddUShort(player.Id);
         message.AddUShort(NetworkManager.Singleton.CurrentTick);
         message.AddVector3(transform.position);
@@ -300,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SendDeath(bool alive)
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.playerDied);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.playerDied);
         message.AddUShort(player.Id);
         if(lastId == -1)
             message.AddUShort(Convert.ToUInt16(player.Id));

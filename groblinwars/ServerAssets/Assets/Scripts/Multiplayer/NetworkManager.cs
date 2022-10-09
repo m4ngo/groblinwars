@@ -1,5 +1,5 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,7 +75,7 @@ public class NetworkManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Server.Tick();
+        Server.Update();
 
         if (CurrentTick % 200 == 0)
             SendSync();
@@ -88,15 +88,15 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
     }
 
-    private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
+    private void PlayerLeft(object sender, ServerDisconnectedEventArgs e)
     {
-        if (Player.list.TryGetValue(e.Id, out Player player))
+        if (Player.list.TryGetValue(e.Client.Id, out Player player))
             Destroy(player.gameObject);
     }
 
     private void SendSync()
     {
-        Message message = Message.Create(MessageSendMode.unreliable, (ushort)ServerToClientId.sync);
+        Message message = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.sync);
         message.Add(CurrentTick);
 
         Server.SendToAll(message);

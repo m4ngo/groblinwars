@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
+using Riptide;
 
 public class NetworkObjectSpawner : MonoBehaviour
 {

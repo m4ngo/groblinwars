@@ -1,5 +1,5 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -221,7 +221,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void UpdateGrabbedObject()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.grabbedObject);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.grabbedObject);
         message.AddUShort(player.Id);
         message.AddInt(grabbedObject != null ? grabbedObject.Id : -1);
         NetworkManager.Singleton.Server.Send(message, player.Id);
@@ -229,7 +229,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void PlayerAttackAnimation()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.playerAttack);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.playerAttack);
         message.AddUShort(player.Id);
         NetworkManager.Singleton.Server.SendToAll(message);
     }

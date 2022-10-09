@@ -2,8 +2,8 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 
 public enum GameStates { 
     PLAYING,
@@ -225,21 +225,21 @@ public class GameLogic : MonoBehaviour
 
     private void SendWinner(ushort id)
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.victory);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.victory);
         message.AddUShort(id);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 
     private void SendLavalLevel()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.lavaLevel);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.lavaLevel);
         message.AddFloat(currentKillFloor);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 
     private void SendSpawnObject(Vector3 position)
     {
-        Message message = Message.Create(MessageSendMode.reliable, (ushort)ServerToClientId.spawnObject);
+        Message message = Message.Create(MessageSendMode.Reliable, (ushort)ServerToClientId.spawnObject);
         message.Add(position);
         NetworkManager.Singleton.Server.SendToAll(message);
     }

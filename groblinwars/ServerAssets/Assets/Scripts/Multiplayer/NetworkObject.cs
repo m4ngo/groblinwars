@@ -1,5 +1,5 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -83,17 +83,17 @@ public class NetworkObject : MonoBehaviour
     #region Messages
     private void SendSpawned()
     {
-        NetworkManager.Singleton.Server.SendToAll(AddSpawnData(Message.Create(MessageSendMode.reliable, ServerToClientId.networkObjectSpawned)));
+        NetworkManager.Singleton.Server.SendToAll(AddSpawnData(Message.Create(MessageSendMode.Reliable, ServerToClientId.networkObjectSpawned)));
     }
 
     public void SendSpawned(ushort toClientId)
     {
-        NetworkManager.Singleton.Server.Send(AddSpawnData(Message.Create(MessageSendMode.reliable, ServerToClientId.networkObjectSpawned)), toClientId);
+        NetworkManager.Singleton.Server.Send(AddSpawnData(Message.Create(MessageSendMode.Reliable, ServerToClientId.networkObjectSpawned)), toClientId);
     }
 
     public void DestroyObject()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.networkObjectDestroyed);
+        Message message = Message.Create(MessageSendMode.Reliable, ServerToClientId.networkObjectDestroyed);
         message.AddUShort(Id);
         NetworkManager.Singleton.Server.SendToAll(message);
 
@@ -113,7 +113,7 @@ public class NetworkObject : MonoBehaviour
         if (NetworkManager.Singleton.CurrentTick % 2 != 0)
             return;
 
-        Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.networkObjectMovement);
+        Message message = Message.Create(MessageSendMode.Unreliable, ServerToClientId.networkObjectMovement);
         message.AddUShort(Id);
         message.AddUShort(NetworkManager.Singleton.CurrentTick);
         message.AddVector3(transform.position);

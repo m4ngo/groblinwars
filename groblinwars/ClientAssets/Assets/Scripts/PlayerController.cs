@@ -1,5 +1,5 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
     #region Messages
     private void SendMovementInput()
     {
-        Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.movementInput);
+        Message message = Message.Create(MessageSendMode.Unreliable, ClientToServerId.movementInput);
         message.AddBools(inputs, false);
         message.AddVector3(camTransform.forward);
         NetworkManager.Singleton.Client.Send(message);
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
     private void SendInteractiveInput(int index)
     {
-        Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.interactiveInput);
+        Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.interactiveInput);
         message.AddInt(index);
         message.AddVector3(transform.position);
         NetworkManager.Singleton.Client.Send(message);
@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
 
     private void SendLeftClick()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.leftClick);
+        Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.leftClick);
         message.AddFloat(chargeTime);
         NetworkManager.Singleton.Client.Send(message);
     }
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
         Physics.Raycast(camTransform.position, camTransform.forward, out RaycastHit hit, grabDistance, grabMask);
         if (hit.collider != null)
         {
-            Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.hammer);
+            Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.hammer);
             message.AddUShort(hit.collider.GetComponent<NetworkObject>().Id);
             NetworkManager.Singleton.Client.Send(message);
         }
@@ -216,14 +216,14 @@ public class PlayerController : MonoBehaviour
             {
                 if(hit.collider.transform.parent.TryGetComponent(out NetworkObject parentObj))
                 {
-                    Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.rightClick);
+                    Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.rightClick);
                     message.AddUShort(parentObj.Id);
                     NetworkManager.Singleton.Client.Send(message);
                 }
             }
             else
             {
-                Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.rightClick);
+                Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.rightClick);
                 message.AddUShort(hit.collider.GetComponent<NetworkObject>().Id);
                 NetworkManager.Singleton.Client.Send(message);
             }
