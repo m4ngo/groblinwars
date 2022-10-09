@@ -41,8 +41,15 @@ public class PlayerCombat : MonoBehaviour
         grabPos.rotation = camRot;
 
         if (!isGrabbing)
+        {
+            movement.SetMoveSpeedBonus(0);
             return;
+        }
 
+        if(grabbedObject.TryGetComponent(out Sped sped)) 
+            movement.SetMoveSpeedBonus(sped.speed);
+        else
+            movement.SetMoveSpeedBonus(0);
     }
 
     public void InputReceived(int index, Vector3 position)
@@ -151,7 +158,7 @@ public class PlayerCombat : MonoBehaviour
         //attempt to grab 
         if(NetworkObject.list.TryGetValue(id, out NetworkObject obj))
         {
-            if (Vector3.Distance(obj.transform.position, transform.position) > 5)
+            if (Vector3.Distance(obj.transform.position, transform.position) > 5 || transform.parent != null)
                 return;
             if (obj.transform.parent != null)
                 if (obj.transform.parent.TryGetComponent(out Player temp))
@@ -165,7 +172,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (obj.TryGetComponent(out PlayerOperatedCannon poc))
         {
-            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER)
+            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER || isGrabbing)
                 return;
             poc.EnterCannon(player.Id);
             return;
@@ -173,7 +180,7 @@ public class PlayerCombat : MonoBehaviour
 
         if (obj.TryGetComponent(out Vehicle veh))
         {
-            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER)
+            if (GameLogic.Singleton.gameState == GameStates.GAMEOVER || isGrabbing)
                 return;
             veh.EnterVehicle(player.Id);
             return;

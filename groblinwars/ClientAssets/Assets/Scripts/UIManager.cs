@@ -96,7 +96,10 @@ public class UIManager : MonoBehaviour
                 pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
         }
 
-        sensitivityField.text = menuSensField.text;
+        if (menuSensField.gameObject.activeInHierarchy)
+        {
+            sensitivityField.text = menuSensField.text;
+        }
         handler.aimSensitivity = float.Parse(sensitivityField.text);
 
         winTextDelay -= Time.deltaTime;
@@ -132,6 +135,7 @@ public class UIManager : MonoBehaviour
 
     public void DisconnectClicked()
     {
+        handler.aimSensitivity = float.Parse(sensitivityField.text);
         NetworkManager.Singleton.Client.Disconnect();
         BackToMain();
         SceneManager.LoadScene(0);

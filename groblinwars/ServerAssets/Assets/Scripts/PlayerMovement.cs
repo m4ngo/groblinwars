@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxFallSpeed;
 
     [SerializeField] private float movementSpeed;
+    private float moveSpeedBonus;
     [SerializeField] private float slowDownSpeed;
     [SerializeField] private float speedUpSpeed;
 
@@ -135,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform.position.y <= killFloor)
         {
+            transform.parent = null;
             if (Player.list.Count > 1)
                 dead = 999999f;
             else
@@ -199,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //CHANGE MOVEMENT LOGIC LATER
         moveDirection = Vector3.Normalize(camProxy.right * inputDirection.x + Vector3.Normalize(flattenVector3(camProxy.forward)) * inputDirection.y);
-        moveDirection *= movementSpeed;
+        moveDirection *= (movementSpeed + moveSpeedBonus);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, groundMask);
         if (!isGrounded && rb.velocity.y < 0.85f)
@@ -342,4 +344,6 @@ public class PlayerMovement : MonoBehaviour
         transform.position = NetworkManager.Singleton.GetSpawnpoint();
         SendDeath(true);
     }
+
+    public void SetMoveSpeedBonus(float amount) { moveSpeedBonus = amount; }
 }

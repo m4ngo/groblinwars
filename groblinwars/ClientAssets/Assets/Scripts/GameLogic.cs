@@ -32,6 +32,7 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject[] networkPrefabs;
     [SerializeField] private GameObject[] hats;
+    [SerializeField] private GameObject spawnObjectEffect;
 
     private void Awake()
     {
@@ -42,5 +43,12 @@ public class GameLogic : MonoBehaviour
     private static void LavaLevel(Message message)
     {
         GameObject.FindWithTag("Lava").transform.position = new Vector3(0, message.GetFloat(), 0);
+    }
+
+
+    [MessageHandler((ushort)ServerToClientId.spawnObject)]
+    private static void SpawnObject(Message message)
+    {
+        Instantiate(GameLogic.Singleton.spawnObjectEffect, message.GetVector3(), Quaternion.identity);
     }
 }

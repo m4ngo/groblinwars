@@ -17,6 +17,7 @@ public enum ServerToClientId : ushort
     playerAttack,
     victory,
     lavaLevel,
+    spawnObject,
 }
 
 public enum ClientToServerId : ushort
